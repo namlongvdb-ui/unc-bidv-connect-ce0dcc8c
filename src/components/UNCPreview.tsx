@@ -157,10 +157,10 @@ export default function UNCPreview({ formData }: Props) {
           </div>
 
           {/* Confirmation text */}
-          <p className="italic text-ink/60 text-center" style={{ fontSize: '8pt', marginTop: '3mm', marginBottom: '4mm' }}>
-            <span className="font-bold not-italic text-ink" style={{ fontSize: '8.5pt' }}>Khách hàng xác nhận các thông tin trên là chính xác</span>
+          <p className="italic text-ink text-center" style={{ fontSize: '8pt', marginTop: '3mm', marginBottom: '4mm' }}>
+            <span className="font-bold not-italic text-bidv-blue" style={{ fontSize: '8.5pt' }}>Khách hàng xác nhận các thông tin trên là chính xác</span>
             <br />
-            <span>Please sign to confirm the above information is accurate</span>
+            <span className="text-ink">Please sign to confirm the above information is accurate</span>
           </p>
 
           {/* Signatures */}
