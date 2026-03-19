@@ -77,9 +77,8 @@ export default function UNCPreview({ formData }: Props) {
 
             {/* Amount */}
             <div className="space-y-[1px] mb-1" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm', paddingTop: '1mm' }}>
-              <p className="font-bold text-bidv-blue uppercase" style={{ fontSize: '9pt', marginBottom: '1mm' }}>Số tiền <span className="italic font-normal" style={{ fontSize: '8pt' }}>/ Amount</span></p>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
                 <span className="italic text-ink/50 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in figures:</span>
                 <span className="font-bold font-mono tracking-wider flex-1" style={{ fontSize: '11pt' }}>{displayAmount}</span>
                 {displayAmount && <span className="font-bold" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
