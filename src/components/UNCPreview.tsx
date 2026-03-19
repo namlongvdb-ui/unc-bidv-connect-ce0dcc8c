@@ -14,8 +14,8 @@ const DottedValue = ({ value, mono }: { value: string; mono?: boolean }) => (
 
 const FieldRow = ({ label, sublabel, value, mono }: { label: string; sublabel: string; value: string; mono?: boolean }) => (
   <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-    <span className="font-bold whitespace-nowrap text-ink" style={{ fontSize: '9.5pt' }}>{label}</span>
-    <span className="italic text-ink/50 whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
+    <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>{label}</span>
+    <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
     <DottedValue value={value} mono={mono} />
   </div>
 );
