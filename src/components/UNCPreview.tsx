@@ -14,8 +14,8 @@ const DottedValue = ({ value, mono }: { value: string; mono?: boolean }) => (
 
 const FieldRow = ({ label, sublabel, value, mono }: { label: string; sublabel: string; value: string; mono?: boolean }) => (
   <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-    <span className="font-bold whitespace-nowrap text-ink" style={{ fontSize: '9.5pt' }}>{label}</span>
-    <span className="italic text-ink/50 whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
+    <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>{label}</span>
+    <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
     <DottedValue value={value} mono={mono} />
   </div>
 );
@@ -62,14 +62,13 @@ export default function UNCPreview({ formData }: Props) {
           <div className="border border-ink/40" style={{ marginTop: '3mm', padding: '2mm 3mm' }}>
             {/* Date */}
             <div className="text-right mb-1">
-              <span className="font-bold text-ink" style={{ fontSize: '9.5pt' }}>Ngày</span>
-              <span className="italic text-ink/50" style={{ fontSize: '8pt' }}>/Date: </span>
+              <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày</span>
+              <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Date: </span>
               <span className="font-bold" style={{ fontSize: '9.5pt' }}>{formData.date}</span>
             </div>
 
             {/* Payer Section */}
             <div className="space-y-[1px] mb-1" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm' }}>
-              <p className="font-bold text-bidv-blue uppercase" style={{ fontSize: '9pt', marginBottom: '1mm' }}>Bên trả tiền <span className="italic font-normal" style={{ fontSize: '8pt' }}>/ Payer</span></p>
               <FieldRow label="Tên tài khoản trích nợ" sublabel="Dr A/C name" value={formData.payerName} />
               <FieldRow label="Địa chỉ" sublabel="Address" value={formData.payerAddress} />
               <FieldRow label="Số tài khoản trích nợ" sublabel="Dr A/C No" value={formData.payerAccount} mono />
@@ -78,16 +77,15 @@ export default function UNCPreview({ formData }: Props) {
 
             {/* Amount */}
             <div className="space-y-[1px] mb-1" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm', paddingTop: '1mm' }}>
-              <p className="font-bold text-bidv-blue uppercase" style={{ fontSize: '9pt', marginBottom: '1mm' }}>Số tiền <span className="italic font-normal" style={{ fontSize: '8pt' }}>/ Amount</span></p>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
-                <span className="italic text-ink/50 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in figures:</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
+                <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in figures:</span>
                 <span className="font-bold font-mono tracking-wider flex-1" style={{ fontSize: '11pt' }}>{displayAmount}</span>
                 {displayAmount && <span className="font-bold" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
-                <span className="italic text-ink/50 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
+                <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
                 <DottedValue value={formData.amountWords} />
               </div>
             </div>
@@ -95,51 +93,50 @@ export default function UNCPreview({ formData }: Props) {
             {/* Exchange & Fee */}
             <div className="space-y-[1px] mb-1" style={{ fontSize: '9pt', borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm', paddingTop: '1mm' }}>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap">Đề nghị quy đổi ra</span>
-                <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
                 <DottedValue value="" />
-                <span className="font-bold whitespace-nowrap ml-1">Tỷ giá</span>
-                <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
+                <span className="font-bold whitespace-nowrap ml-1 text-bidv-blue">Tỷ giá</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
                 <DottedValue value="" />
               </div>
               <div className="flex gap-3 items-center" style={{ lineHeight: '1.8' }}>
                 <span>
                   <Checkbox checked={formData.feeType === 'deduct'} />
-                  <span className="font-bold">Phí trong số tiền chuyển</span>
-                  <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Deduct</span>
+                  <span className="font-bold text-bidv-blue">Phí trong số tiền chuyển</span>
+                  <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Deduct</span>
                 </span>
                 <span>
                   <Checkbox checked={formData.feeType === 'cash'} />
-                  <span className="font-bold">Phí thu từ tiền mặt</span>
-                  <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
+                  <span className="font-bold text-bidv-blue">Phí thu từ tiền mặt</span>
+                  <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
                 </span>
               </div>
               <div style={{ lineHeight: '1.8' }}>
                 <Checkbox checked={formData.feeType === 'account'} />
-                <span className="font-bold">Phí thu từ tài khoản</span>
-                <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
+                <span className="font-bold text-bidv-blue">Phí thu từ tài khoản</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
               </div>
             </div>
 
             {/* Beneficiary Section */}
             <div className="space-y-[1px] mb-1" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm', paddingTop: '1mm' }}>
-              <p className="font-bold text-bidv-blue uppercase" style={{ fontSize: '9pt', marginBottom: '1mm' }}>Bên nhận tiền <span className="italic font-normal" style={{ fontSize: '8pt' }}>/ Beneficiary</span></p>
               <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} />
               <div className="flex gap-3">
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
-                  <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Số CCCD/HC</span>
-                  <span className="italic text-ink/50" style={{ fontSize: '8pt' }}>/ID No:</span>
+                  <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số CCCD/HC</span>
+                  <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/ID No:</span>
                   <DottedValue value={formData.beneficiaryCCCD} mono />
                 </div>
                 <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                  <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Ngày cấp</span>
-                  <span className="italic text-ink/50" style={{ fontSize: '8pt' }}>/Date:</span>
+                  <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày cấp</span>
+                  <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Date:</span>
                   <DottedValue value={formData.cccdDate} />
                 </div>
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Nơi cấp</span>
-                <span className="italic text-ink/50" style={{ fontSize: '8pt' }}>/Place:</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Nơi cấp</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Place:</span>
                 <DottedValue value={formData.cccdPlace} />
               </div>
               <FieldRow label="Địa chỉ" sublabel="Address" value={formData.beneficiaryAddress} />
@@ -149,7 +146,6 @@ export default function UNCPreview({ formData }: Props) {
 
             {/* Remarks */}
             <div style={{ paddingTop: '1mm', paddingBottom: '1mm' }}>
-              <p className="font-bold text-bidv-blue uppercase" style={{ fontSize: '9pt', marginBottom: '1mm' }}>Nội dung <span className="italic font-normal" style={{ fontSize: '8pt' }}>/ Remarks</span></p>
               <FieldRow label="Nội dung" sublabel="Remarks" value={formData.remarks} />
             </div>
           </div>
