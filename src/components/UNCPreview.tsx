@@ -91,7 +91,7 @@ export default function UNCPreview({ formData }: Props) {
             </div>
 
             {/* Exchange & Fee */}
-            <div className="space-y-[1px]" style={{ fontSize: '9pt', borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
+            <div className="space-y-[1px] border-l border-r border-ink/40" style={{ fontSize: '9pt', borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
                 <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
