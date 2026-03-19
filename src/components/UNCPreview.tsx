@@ -91,7 +91,7 @@ export default function UNCPreview({ formData }: Props) {
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
-                <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
+                <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
                 <span className="flex-1 border-b border-dotted border-ink/30 pb-0.5 min-h-[1.2em]">{formData.amountWords || '\u00A0'}</span>
               </div>
               <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>
