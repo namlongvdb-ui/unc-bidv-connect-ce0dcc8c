@@ -93,29 +93,29 @@ export default function UNCPreview({ formData }: Props) {
             {/* Exchange & Fee */}
             <div className="space-y-[1px] mb-1" style={{ fontSize: '9pt', borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm', paddingTop: '1mm' }}>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap">Đề nghị quy đổi ra</span>
-                <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
                 <DottedValue value="" />
-                <span className="font-bold whitespace-nowrap ml-1">Tỷ giá</span>
-                <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
+                <span className="font-bold whitespace-nowrap ml-1 text-bidv-blue">Tỷ giá</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
                 <DottedValue value="" />
               </div>
               <div className="flex gap-3 items-center" style={{ lineHeight: '1.8' }}>
                 <span>
                   <Checkbox checked={formData.feeType === 'deduct'} />
-                  <span className="font-bold">Phí trong số tiền chuyển</span>
-                  <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Deduct</span>
+                  <span className="font-bold text-bidv-blue">Phí trong số tiền chuyển</span>
+                  <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Deduct</span>
                 </span>
                 <span>
                   <Checkbox checked={formData.feeType === 'cash'} />
-                  <span className="font-bold">Phí thu từ tiền mặt</span>
-                  <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
+                  <span className="font-bold text-bidv-blue">Phí thu từ tiền mặt</span>
+                  <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
                 </span>
               </div>
               <div style={{ lineHeight: '1.8' }}>
                 <Checkbox checked={formData.feeType === 'account'} />
-                <span className="font-bold">Phí thu từ tài khoản</span>
-                <span className="italic text-ink/50" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
+                <span className="font-bold text-bidv-blue">Phí thu từ tài khoản</span>
+                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
               </div>
             </div>
 
