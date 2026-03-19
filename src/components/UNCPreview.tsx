@@ -92,7 +92,10 @@ export default function UNCPreview({ formData }: Props) {
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
                 <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
-                <DottedValue value={formData.amountWords} />
+                <span className="flex-1 border-b border-dotted border-ink/30 pb-0.5 min-h-[1.2em]">{formData.amountWords || '\u00A0'}</span>
+              </div>
+              <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>
+                {formData.amountWords && formData.amountWords.length > 60 ? '' : '\u00A0'}
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
@@ -124,13 +127,14 @@ export default function UNCPreview({ formData }: Props) {
             {/* Beneficiary Section */}
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
               <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} />
+              <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>{'\u00A0'}</div>
               <div className="flex gap-3">
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số CCCD/HC</span>
                   <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/ID No:</span>
                   <DottedValue value={formData.beneficiaryCCCD} mono />
                 </div>
-                <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
+                <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày cấp</span>
                   <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Date:</span>
                   <DottedValue value={formData.cccdDate} />
