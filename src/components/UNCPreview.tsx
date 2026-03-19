@@ -84,8 +84,8 @@ export default function UNCPreview({ formData }: Props) {
                 {displayAmount && <span className="font-bold" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
-                <span className="italic text-ink/50 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
+                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
+                <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
                 <DottedValue value={formData.amountWords} />
               </div>
             </div>
