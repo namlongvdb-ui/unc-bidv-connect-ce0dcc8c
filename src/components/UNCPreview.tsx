@@ -99,7 +99,7 @@ export default function UNCPreview({ formData }: Props) {
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
-                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
+                <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
                 <DottedValue value="" />
                 <span className="font-bold whitespace-nowrap ml-1 text-bidv-blue">Tỷ giá</span>
                 <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
