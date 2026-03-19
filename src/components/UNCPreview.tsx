@@ -15,7 +15,7 @@ const DottedValue = ({ value, mono }: { value: string; mono?: boolean }) => (
 const FieldRow = ({ label, sublabel, value, mono }: { label: string; sublabel: string; value: string; mono?: boolean }) => (
   <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
     <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>{label}</span>
-    <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
+    <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
     <DottedValue value={value} mono={mono} />
   </div>
 );
@@ -63,7 +63,7 @@ export default function UNCPreview({ formData }: Props) {
             {/* Date */}
             <div className="text-right" style={{ padding: '1mm 3mm' }}>
               <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày</span>
-              <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Date: </span>
+              <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Date: </span>
               <span className="font-bold" style={{ fontSize: '9.5pt' }}>{formData.date}</span>
             </div>
 
@@ -72,7 +72,7 @@ export default function UNCPreview({ formData }: Props) {
               <div className="bg-bidv-blue/10 -mx-[3mm] px-[3mm] py-[0.5mm]">
                 <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Tên tài khoản trích nợ</span>
-                  <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Dr A/C name:</span>
+                  <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Dr A/C name:</span>
                 </div>
                 <div style={{ minHeight: '1.6em', lineHeight: '1.8' }}>{formData.payerName || '\u00A0'}</div>
               </div>
@@ -85,13 +85,13 @@ export default function UNCPreview({ formData }: Props) {
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
-                <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in figures:</span>
+                <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in figures:</span>
                 <span className="font-bold font-mono tracking-wider flex-1" style={{ fontSize: '11pt' }}>{displayAmount}</span>
                 {displayAmount && <span className="font-bold" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
-                <span className="italic text-bidv-blue/60 whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
+                <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
                 <span className="flex-1 border-b border-dotted border-ink/30 pb-0.5 min-h-[1.2em]">{formData.amountWords || '\u00A0'}</span>
               </div>
               <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>
@@ -99,28 +99,28 @@ export default function UNCPreview({ formData }: Props) {
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
-                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
+                <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
                 <DottedValue value="" />
                 <span className="font-bold whitespace-nowrap ml-1 text-bidv-blue">Tỷ giá</span>
-                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
+                <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
                 <DottedValue value="" />
               </div>
-              <div className="flex gap-3 items-center" style={{ lineHeight: '1.8' }}>
+              <div className="grid grid-cols-3 items-center" style={{ lineHeight: '1.8' }}>
                 <span>
                   <Checkbox checked={formData.feeType === 'deduct'} />
                   <span className="font-bold text-bidv-blue">Phí trong số tiền chuyển</span>
-                  <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Deduct</span>
+                  <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Deduct</span>
                 </span>
-                <span>
+                <span className="text-center">
                   <Checkbox checked={formData.feeType === 'cash'} />
                   <span className="font-bold text-bidv-blue">Phí thu từ tiền mặt</span>
-                  <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
+                  <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
                 </span>
-              </div>
-              <div style={{ lineHeight: '1.8' }}>
-                <Checkbox checked={formData.feeType === 'account'} />
-                <span className="font-bold text-bidv-blue">Phí thu từ tài khoản</span>
-                <span className="italic text-bidv-blue/60" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
+                <span className="text-right">
+                  <Checkbox checked={formData.feeType === 'account'} />
+                  <span className="font-bold text-bidv-blue">Phí thu từ tài khoản</span>
+                  <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
+                </span>
               </div>
             </div>
 
@@ -131,18 +131,18 @@ export default function UNCPreview({ formData }: Props) {
               <div className="flex gap-3">
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số CCCD/HC</span>
-                  <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/ID No:</span>
+                  <span className="italic text-ink" style={{ fontSize: '8pt' }}>/ID No:</span>
                   <DottedValue value={formData.beneficiaryCCCD} mono />
                 </div>
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày cấp</span>
-                  <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Date:</span>
+                  <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Date:</span>
                   <DottedValue value={formData.cccdDate} />
                 </div>
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Nơi cấp</span>
-                <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Place:</span>
+                <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Place:</span>
                 <DottedValue value={formData.cccdPlace} />
               </div>
               <FieldRow label="Địa chỉ" sublabel="Address" value={formData.beneficiaryAddress} />
@@ -157,37 +157,37 @@ export default function UNCPreview({ formData }: Props) {
           </div>
 
           {/* Confirmation text */}
-          <p className="italic text-ink/60 text-center" style={{ fontSize: '8pt', marginTop: '3mm', marginBottom: '4mm' }}>
-            <span className="font-bold not-italic text-ink" style={{ fontSize: '8.5pt' }}>Khách hàng xác nhận các thông tin trên là chính xác</span>
+          <p className="italic text-ink text-center" style={{ fontSize: '8pt', marginTop: '3mm', marginBottom: '4mm' }}>
+            <span className="font-bold not-italic text-bidv-blue" style={{ fontSize: '8.5pt' }}>Khách hàng xác nhận các thông tin trên là chính xác</span>
             <br />
-            <span>Please sign to confirm the above information is accurate</span>
+            <span className="text-ink">Please sign to confirm the above information is accurate</span>
           </p>
 
           {/* Signatures */}
           <div className="grid grid-cols-[1fr_1fr_1px_1fr_1fr] gap-x-3 text-center" style={{ fontSize: '8pt', marginTop: '2mm' }}>
             <div>
-              <p className="font-bold uppercase" style={{ fontSize: '8.5pt' }}>Kế toán trưởng</p>
-              <p className="italic text-ink/40" style={{ fontSize: '7pt' }}>Chief Accountant</p>
-              <p className="italic text-ink/30 mt-0.5" style={{ fontSize: '6.5pt' }}>(Ký và ghi rõ họ tên)</p>
-              <p className="italic text-ink/30" style={{ fontSize: '6.5pt' }}>Signature & full name</p>
+              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Kế toán trưởng</p>
+              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Chief Accountant</p>
+              <p className="italic text-ink/50 mt-0.5" style={{ fontSize: '6.5pt' }}>(Ký và ghi rõ họ tên)</p>
+              <p className="italic text-ink/50" style={{ fontSize: '6.5pt' }}>Signature & full name</p>
               <div style={{ height: '55px' }} />
             </div>
             <div>
-              <p className="font-bold uppercase" style={{ fontSize: '8.5pt' }}>Chủ tài khoản</p>
-              <p className="italic text-ink/40" style={{ fontSize: '7pt' }}>Accountholder</p>
-              <p className="italic text-ink/30 mt-0.5" style={{ fontSize: '6.5pt' }}>(Ký và ghi rõ họ tên)</p>
-              <p className="italic text-ink/30" style={{ fontSize: '6.5pt' }}>Signature & full name</p>
+              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Chủ tài khoản</p>
+              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Accountholder</p>
+              <p className="italic text-ink/50 mt-0.5" style={{ fontSize: '6.5pt' }}>(Ký và ghi rõ họ tên)</p>
+              <p className="italic text-ink/50" style={{ fontSize: '6.5pt' }}>Signature & full name</p>
               <div style={{ height: '55px' }} />
             </div>
             <div className="bg-ink/10" />
             <div>
-              <p className="font-bold uppercase" style={{ fontSize: '8.5pt' }}>Giao dịch viên</p>
-              <p className="italic text-ink/40" style={{ fontSize: '7pt' }}>Teller</p>
+              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Giao dịch viên</p>
+              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Teller</p>
               <div style={{ height: '65px' }} />
             </div>
             <div>
-              <p className="font-bold uppercase" style={{ fontSize: '8.5pt' }}>Kiểm soát viên</p>
-              <p className="italic text-ink/40" style={{ fontSize: '7pt' }}>Supervisor</p>
+              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Kiểm soát viên</p>
+              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Supervisor</p>
               <div style={{ height: '65px' }} />
             </div>
           </div>
