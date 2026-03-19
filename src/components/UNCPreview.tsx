@@ -120,7 +120,7 @@ export default function UNCPreview({ formData }: Props) {
             </div>
 
             {/* Beneficiary Section */}
-            <div className="space-y-[1px]" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
+            <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
               <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} />
               <div className="flex gap-3">
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
