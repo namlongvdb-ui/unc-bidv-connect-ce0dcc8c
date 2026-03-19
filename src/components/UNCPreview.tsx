@@ -121,7 +121,6 @@ export default function UNCPreview({ formData }: Props) {
 
             {/* Beneficiary Section */}
             <div className="space-y-[1px] mb-1" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.15)', paddingBottom: '2mm', paddingTop: '1mm' }}>
-              <p className="font-bold text-bidv-blue uppercase" style={{ fontSize: '9pt', marginBottom: '1mm' }}>Bên nhận tiền <span className="italic font-normal" style={{ fontSize: '8pt' }}>/ Beneficiary</span></p>
               <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} />
               <div className="flex gap-3">
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
