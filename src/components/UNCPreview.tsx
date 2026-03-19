@@ -142,7 +142,7 @@ export default function UNCPreview({ formData }: Props) {
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Nơi cấp</span>
-                <span className="italic text-bidv-blue/60" style={{ fontSize: '8pt' }}>/Place:</span>
+                <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Place:</span>
                 <DottedValue value={formData.cccdPlace} />
               </div>
               <FieldRow label="Địa chỉ" sublabel="Address" value={formData.beneficiaryAddress} />
