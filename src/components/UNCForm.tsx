@@ -36,8 +36,22 @@ const InputField = ({ label, sublabel, value, onChange, placeholder, mono, type 
   </div>
 );
 
-export default function UNCForm({ formData, updateField, beneficiaries, onSaveBeneficiary, onRemoveBeneficiary }: Props) {
+export default function UNCForm({ formData, updateField, beneficiaries, onSaveBeneficiary, onRemoveBeneficiary, history, onSaveTransaction, onLoadTransaction, onRemoveTransaction }: Props) {
   const [showPicker, setShowPicker] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportPDF = async () => {
+    setExporting(true);
+    try {
+      await exportUNCToPDF();
+      onSaveTransaction();
+    } catch (e) {
+      console.error('PDF export failed', e);
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const handleAmountChange = (val: string) => {
     const cleaned = val.replace(/[^\d]/g, '');
