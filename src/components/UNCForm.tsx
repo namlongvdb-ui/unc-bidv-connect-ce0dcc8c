@@ -3,12 +3,19 @@ import { UNCFormData } from '@/hooks/useUNCForm';
 import { Beneficiary } from '@/hooks/useBeneficiaries';
 import { numberToVietnameseWords, formatCurrency } from '@/lib/numberToWords';
 
+import { TransactionRecord } from '@/hooks/useTransactionHistory';
+import { exportUNCToPDF } from '@/lib/exportPDF';
+
 interface Props {
   formData: UNCFormData;
   updateField: (field: keyof UNCFormData, value: string) => void;
   beneficiaries: Beneficiary[];
   onSaveBeneficiary: (b: Omit<Beneficiary, 'id'>) => void;
   onRemoveBeneficiary: (id: string) => void;
+  history: TransactionRecord[];
+  onSaveTransaction: () => void;
+  onLoadTransaction: (record: TransactionRecord) => void;
+  onRemoveTransaction: (id: string) => void;
 }
 
 const InputField = ({ label, sublabel, value, onChange, placeholder, mono, type }: {
