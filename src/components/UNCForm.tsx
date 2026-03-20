@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { UNCFormData } from '@/hooks/useUNCForm';
+import { Beneficiary } from '@/hooks/useBeneficiaries';
 import { numberToVietnameseWords, formatCurrency } from '@/lib/numberToWords';
 
 interface Props {
   formData: UNCFormData;
   updateField: (field: keyof UNCFormData, value: string) => void;
+  beneficiaries: Beneficiary[];
+  onSaveBeneficiary: (b: Omit<Beneficiary, 'id'>) => void;
+  onRemoveBeneficiary: (id: string) => void;
 }
 
 const InputField = ({ label, sublabel, value, onChange, placeholder, mono, type }: {
@@ -24,7 +29,9 @@ const InputField = ({ label, sublabel, value, onChange, placeholder, mono, type 
   </div>
 );
 
-export default function UNCForm({ formData, updateField }: Props) {
+export default function UNCForm({ formData, updateField, beneficiaries, onSaveBeneficiary, onRemoveBeneficiary }: Props) {
+  const [showPicker, setShowPicker] = useState(false);
+
   const handleAmountChange = (val: string) => {
     const cleaned = val.replace(/[^\d]/g, '');
     updateField('amount', cleaned);
@@ -39,6 +46,22 @@ export default function UNCForm({ formData, updateField }: Props) {
   const displayAmount = formData.amount
     ? formatCurrency(parseInt(formData.amount))
     : '';
+
+  const handleSelectBeneficiary = (b: Beneficiary) => {
+    updateField('beneficiaryName', b.name);
+    updateField('beneficiaryAccount', b.account);
+    updateField('beneficiaryBank', b.bank);
+    setShowPicker(false);
+  };
+
+  const handleSaveCurrent = () => {
+    if (!formData.beneficiaryName || !formData.beneficiaryAccount) return;
+    onSaveBeneficiary({
+      name: formData.beneficiaryName,
+      account: formData.beneficiaryAccount,
+      bank: formData.beneficiaryBank,
+    });
+  };
 
   return (
     <aside className="w-[420px] min-w-[380px] bg-card border-r border-border overflow-y-auto flex-shrink-0">
@@ -95,7 +118,56 @@ export default function UNCForm({ formData, updateField }: Props) {
 
         {/* Beneficiary section */}
         <section className="space-y-3">
-          <h2 className="text-[11px] font-semibold uppercase tracking-wider text-bidv-blue">Bên nhận tiền / Beneficiary</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-[11px] font-semibold uppercase tracking-wider text-bidv-blue">Bên nhận tiền / Beneficiary</h2>
+            <div className="flex gap-1">
+              {beneficiaries.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowPicker(!showPicker)}
+                  className="text-[10px] px-2 py-0.5 rounded border border-bidv-blue/30 text-bidv-blue hover:bg-bidv-blue/10 transition-colors"
+                >
+                  📋 Chọn nhanh ({beneficiaries.length})
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleSaveCurrent}
+                disabled={!formData.beneficiaryName || !formData.beneficiaryAccount}
+                className="text-[10px] px-2 py-0.5 rounded border border-bidv-blue/30 text-bidv-blue hover:bg-bidv-blue/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                💾 Lưu
+              </button>
+            </div>
+          </div>
+
+          {/* Beneficiary picker dropdown */}
+          {showPicker && (
+            <div className="border border-border rounded-md bg-card shadow-lg max-h-48 overflow-y-auto">
+              {beneficiaries.map(b => (
+                <div
+                  key={b.id}
+                  className="flex items-center justify-between px-3 py-2 hover:bg-muted/50 cursor-pointer border-b border-border last:border-0 group"
+                >
+                  <div
+                    className="flex-1 min-w-0"
+                    onClick={() => handleSelectBeneficiary(b)}
+                  >
+                    <p className="text-xs font-medium text-foreground truncate">{b.name}</p>
+                    <p className="text-[10px] text-muted-foreground font-mono">{b.account} — {b.bank}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); onRemoveBeneficiary(b.id); }}
+                    className="text-destructive/50 hover:text-destructive text-xs ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <InputField label="Người hưởng" sublabel="/Beneficiary" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} placeholder="Tên người hưởng" />
           <div className="grid grid-cols-2 gap-3">
             <InputField label="Số CCCD/HC" sublabel="/ID No" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} placeholder="" mono />
