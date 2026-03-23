@@ -8,6 +8,8 @@ export interface UNCFormData {
   payerBank: string;
   amount: string;
   amountWords: string;
+  exchangeTo: string;
+  exchangeRate: string;
   feeType: 'deduct' | 'cash' | 'account';
   beneficiaryName: string;
   beneficiaryCCCD: string;
@@ -31,6 +33,8 @@ export function useUNCForm() {
     payerBank: 'BIDV - ',
     amount: '',
     amountWords: '',
+    exchangeTo: '',
+    exchangeRate: '',
     feeType: 'deduct',
     beneficiaryName: '',
     beneficiaryCCCD: '',
