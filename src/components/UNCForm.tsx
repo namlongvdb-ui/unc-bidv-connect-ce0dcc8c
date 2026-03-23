@@ -111,11 +111,11 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
 
         {/* SỐ TIỀN & PHÍ - Đã sửa logic Toggle */}
         <div className="space-y-3 p-3 bg-muted/30 rounded-lg">
-          <InputField label="Số tiền bằng số" value={displayAmount} onChange={handleAmountChange} placeholder="0" mono />
+          <InputField label="Số tiền bằng số" value={displayAmount} onChange={handleAmountChange} placeholder="" mono />
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1">Số tiền bằng chữ</label>
             <p className="text-[11px] text-foreground italic bg-background p-2 rounded border border-dashed leading-tight">
-              {formData.amountWords || '...'}
+              {formData.amountWords || ''}
             </p>
           </div>
           
