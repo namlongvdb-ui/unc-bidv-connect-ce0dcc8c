@@ -39,12 +39,12 @@ export default function UNCPreview({ formData }: Props) {
           lineHeight: '1.6',
         }}
       >
-        {/* Watermark - Đảm bảo phủ kín tờ giấy */}
+        {/* Watermark */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
           <img src={bidvWatermark} alt="" className="w-full h-full object-cover opacity-100" />
         </div>
 
-        {/* Content Area - Bổ sung h-full để absolute footer hoạt động chính xác */}
+        {/* Content Area */}
         <div className="relative h-full" style={{ zIndex: 1, padding: '10mm 15mm' }}>
           
           {/* Header */}
@@ -56,14 +56,15 @@ export default function UNCPreview({ formData }: Props) {
           <div className="text-right mb-2">
             <span className="font-bold text-bidv-blue">Ngày</span>
             <span className="italic text-ink">/Date: </span>
-            <span className="font-bold border-b border-dotted border-black px-2">{formData.date || '    /    /202  '}</span>
+            {/* Xóa border-b và border-dotted */}
+            <span className="font-bold px-2">{formData.date || '    /    /202  '}</span>
           </div>
 
           {/* Bordered Box */}
           <div className="border border-ink/40 w-full">
             
             {/* 1. Phần trả tiền */}
-             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', borderTop: '1px solid hsl(0 0% 12% / 0.4)', padding: '0 3mm 1mm 3mm' }}>
+            <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', borderTop: '1px solid hsl(0 0% 12% / 0.4)', padding: '0 3mm 1mm 3mm' }}>
               <div className="bg-bidv-blue/10 -mx-[3mm] px-[3mm] py-[0.5mm] -mt-0">
                 <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Tên tài khoản trích nợ</span>
@@ -101,12 +102,14 @@ export default function UNCPreview({ formData }: Props) {
                 <div className="inline-block">
                   <span className="font-bold text-bidv-blue">Đề nghị quy đổi ra</span>
                   <span className="italic text-ink text-[8pt]">/Request for changing into:</span>
-                  <span className="ml-2 font-bold underline decoration-dotted">{formData.exchangeTo || '\u00A0'}</span>
+                  {/* Xóa gạch chân chấm chấm */}
+                  <span className="ml-2 font-bold">{formData.exchangeTo || '\u00A0'}</span>
                 </div>
                 <div className="inline-block">
                   <span className="font-bold text-bidv-blue">Tỷ giá</span>
                   <span className="italic text-ink text-[8pt]">/Ex rate:</span>
-                  <span className="ml-2 font-bold underline decoration-dotted">{formData.exchangeRate || '\u00A0'}</span>
+                  {/* Xóa gạch chân chấm chấm */}
+                  <span className="ml-2 font-bold">{formData.exchangeRate || '\u00A0'}</span>
                 </div>
               </div>
 
@@ -166,12 +169,13 @@ export default function UNCPreview({ formData }: Props) {
             </div>
           </div>
 
-          {/* CỐ ĐỊNH CHÂN TRANG: Đặt bên trong thẻ Content Area đã có h-full */}
+          {/* CHÂN TRANG - Đã loại bỏ thanh kẻ ngang hoàn toàn */}
           <div 
             className="absolute left-0 right-0 text-center" 
             style={{ bottom: '15mm' }}
           >
-            <div className="inline-block border-t border-bidv-blue/20 pt-2 w-[80%]">
+            {/* Đã xóa sạch class border-t và border-bidv-blue/20 */}
+            <div className="inline-block w-[80%] pt-2">
               <p className="font-bold text-bidv-blue" style={{ fontSize: '9pt' }}>
                 Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV
               </p>
