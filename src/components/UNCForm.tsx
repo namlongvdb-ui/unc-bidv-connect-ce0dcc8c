@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UNCFormData } from '@/hooks/useUNCForm';
 import { Beneficiary } from '@/hooks/useBeneficiaries';
 import { numberToVietnameseWords, formatCurrency } from '@/lib/numberToWords';
@@ -39,6 +39,20 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
   const [showPicker, setShowPicker] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [exporting, setExporting] = useState(false);
+
+  // Thiết lập thông tin mặc định khi mở chương trình
+  useEffect(() => {
+    if (!formData.payerName) {
+      updateField('payerName', 'NHPTVN-Chi nhánh KV Bắc Đông Bắc, PGD Cao Bằng');
+      updateField('payerAddress', 'số 32, phố Xuân trường, phường Thục Phán, tỉnh Cao Bằng');
+      updateField('payerAccount', '3300013207');
+      updateField('payerBank', 'BIDV-Chi nhánh Cao Bằng');
+      
+      updateField('beneficiaryName', 'Danh sách cá nhân kèm theo');
+      updateField('beneficiaryAccount', '280701009');
+      updateField('beneficiaryBank', 'BIDV-Chi nhánh Cao Bằng');
+    }
+  }, []);
 
   const handleExportPDF = async () => {
     setExporting(true);
@@ -81,6 +95,8 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
       account: formData.beneficiaryAccount,
       bank: formData.beneficiaryBank,
     });
+    // Tự động mở danh sách sau khi lưu để người dùng thấy kết quả
+    setShowPicker(true);
   };
 
   return (
@@ -113,72 +129,92 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
             <label className="block text-xs font-medium text-muted-foreground mb-1">Số tiền bằng chữ <span className="font-normal italic text-muted-foreground/70">Amount in words</span></label>
             <p className="text-sm text-foreground min-h-[2em] border-b border-border py-2">{formData.amountWords || '\u00A0'}</p>
           </div>
-         <div>
-  <label className="block text-xs font-medium text-muted-foreground mb-1">
-    Loại phí <span className="font-normal italic text-muted-foreground/70">Fee type</span>
-  </label>
-  <div className="flex gap-4 mt-1">
-    {(['deduct', 'cash', 'account'] as const).map(ft => (
-      <label key={ft} className="flex items-center gap-1.5 text-sm cursor-pointer">
-        <input 
-          type="radio" 
-          name="feeType" 
-          // Giữ checked để hiển thị dấu chấm
-          checked={formData.feeType === ft} 
-          // Sử dụng onClick để xử lý logic bật/tắt
-          onClick={() => {
-            if (formData.feeType === ft) {
-              // Nếu đang chọn chính nó thì cập nhật thành chuỗi rỗng (bỏ chọn)
-              updateField('feeType', '');
-            } else {
-              // Nếu chưa chọn thì cập nhật giá trị mới
-              updateField('feeType', ft);
-            }
-          }}
-          // Chặn onChange mặc định để tránh xung đột
-          onChange={() => {}} 
-          className="accent-primary" 
-        />
-        {ft === 'deduct' ? 'Trích nợ' : ft === 'cash' ? 'Tiền mặt' : 'Tài khoản'}
-      </label>
-    ))}
-  </div>
-</div>
-          {/* Thay đổi grid-cols-2 thành grid-cols-3 (tổng 3 phần) */}
-   <div className="grid grid-cols-3 gap-3">
-  {/* Thêm class col-span-2 để ô này chiếm 2 phần */}
-  <div className="col-span-2">
-    <InputField label="Đề nghị quy đổi ra" sublabel="Changing into" value={formData.exchangeTo} onChange={v => updateField('exchangeTo', v)} />
-  </div>
-  {/* Ô này mặc định chiếm 1 phần còn lại, nên nó sẽ nhỏ hơn */}
-  <InputField label="Tỷ giá" sublabel="Ex rate" value={formData.exchangeRate} onChange={v => updateField('exchangeRate', v)} />
-   </div>
+          
+          {/* Fee Type với Logic Bấm để bỏ chọn */}
+          <div>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Loại phí <span className="font-normal italic text-muted-foreground/70">Fee type</span></label>
+            <div className="flex gap-4 mt-1">
+              {(['deduct', 'cash', 'account'] as const).map(ft => (
+                <label key={ft} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="feeType" 
+                    checked={formData.feeType === ft} 
+                    onClick={() => {
+                      if (formData.feeType === ft) {
+                        updateField('feeType', '');
+                      } else {
+                        updateField('feeType', ft);
+                      }
+                    }}
+                    onChange={() => {}} 
+                    className="accent-primary" 
+                  />
+                  {ft === 'deduct' ? 'Trích nợ' : ft === 'cash' ? 'Tiền mặt' : 'Tài khoản'}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Quy đổi & Tỷ giá với tỷ lệ 2:1 */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="col-span-2">
+              <InputField label="Đề nghị quy đổi ra" sublabel="Changing into" value={formData.exchangeTo} onChange={v => updateField('exchangeTo', v)} />
+            </div>
+            <InputField label="Tỷ giá" sublabel="Ex rate" value={formData.exchangeRate} onChange={v => updateField('exchangeRate', v)} />
+          </div>
         </div>
 
-        {/* Beneficiary */}
+        {/* Beneficiary section với Nút bấm chuyên nghiệp */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-  <p className="text-xs font-bold text-primary uppercase tracking-wider">Người hưởng</p>
-  <div className="flex gap-2">
-    {beneficiaries.length > 0 && (
-      <button 
-        onClick={() => setShowPicker(!showPicker)} 
-        className="text-xs px-2 py-1 border border-primary text-primary rounded hover:bg-primary hover:text-primary-foreground transition-colors"
-      >
-        {showPicker ? 'Đóng DS' : 'Chọn từ DS'}
-      </button>
-    )}
-    
-    {/* Nút Lưu người hưởng mới - Chuyên nghiệp hơn */}
-    <button 
-      onClick={handleSaveCurrent} 
-      className="text-xs px-2 py-1 bg-accent text-accent-foreground rounded shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-1"
-    >
-      <span>💾</span> Lưu người hưởng
-    </button>
-  </div>
-</div>
-         <InputField label="Tên người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} />
+            <p className="text-xs font-bold text-primary uppercase tracking-wider">Người hưởng</p>
+            <div className="flex gap-2">
+              {beneficiaries.length > 0 && (
+                <button 
+                  onClick={() => setShowPicker(!showPicker)} 
+                  className="text-xs px-2 py-1 border border-primary text-primary rounded hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  {showPicker ? 'Đóng DS' : 'Chọn từ DS'}
+                </button>
+              )}
+              <button 
+                onClick={handleSaveCurrent} 
+                className="text-xs px-2 py-1 bg-accent text-accent-foreground rounded shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-1"
+              >
+                <span>💾</span> Lưu người hưởng
+              </button>
+            </div>
+          </div>
+
+          {/* Danh sách người hưởng đã lưu */}
+          {showPicker && beneficiaries.length > 0 && (
+            <div className="bg-muted rounded-md p-2 space-y-1 max-h-40 overflow-y-auto border border-border shadow-inner">
+              {beneficiaries.map(b => (
+                <div 
+                  key={b.id} 
+                  className="flex items-center justify-between text-xs p-2 hover:bg-background rounded cursor-pointer border-b border-border/50 last:border-0" 
+                  onClick={() => handleSelectBeneficiary(b)}
+                >
+                  <div className="flex flex-col">
+                    <span className="font-bold">{b.name}</span>
+                    <span className="text-muted-foreground">{b.account} - {b.bank}</span>
+                  </div>
+                  <button 
+                    onClick={e => { 
+                      e.stopPropagation(); 
+                      onRemoveBeneficiary(b.id); 
+                    }} 
+                    className="p-1 hover:bg-destructive/10 text-destructive rounded transition-colors"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <InputField label="Tên người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} />
           <InputField label="Số CCCD/HC" sublabel="ID No" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
           <div className="grid grid-cols-2 gap-3">
             <InputField label="Ngày cấp" sublabel="Date" value={formData.cccdDate} onChange={v => updateField('cccdDate', v)} />
@@ -209,7 +245,7 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
         {showHistory && history.length > 0 && (
           <div className="max-h-40 overflow-y-auto space-y-1">
             {history.map(r => (
-              <div key={r.id} className="flex items-center justify-between text-xs p-2 bg-muted rounded">
+              <div key={r.id} className="flex items-center justify-between text-xs p-2 bg-muted rounded border border-border/50">
                 <button onClick={() => onLoadTransaction(r)} className="hover:underline text-left">
                   {r.savedAt} - {r.formData.beneficiaryName || 'Chưa có'}
                 </button>
