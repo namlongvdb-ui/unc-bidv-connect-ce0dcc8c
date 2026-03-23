@@ -12,7 +12,7 @@ const DottedValue = ({ value, mono }: { value: string; mono?: boolean }) => (
   </span>
 );
 
-const FieldRow = ({ label, sublabel, value, mono, labelWidth }: { label: string; sublabel: string; value: string; mono?: boolean; labelWidth?: string }) => (
+const FieldRow = ({ label, sublabel, value, mono }: { label: string; sublabel: string; value: string; mono?: boolean }) => (
   <div style={{ lineHeight: '1.8' }}>
     <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>{label}</span>
     <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/{sublabel}: </span>
@@ -43,14 +43,12 @@ export default function UNCPreview({ formData }: Props) {
           lineHeight: '1.7',
         }}
       >
-        {/* Watermark - full background like the original template */}
+        {/* Giữ nguyên Watermark theo code bạn gửi */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
           <img src={bidvWatermark} alt="" className="w-full h-full object-cover" style={{ opacity: 1 }} />
         </div>
 
-        {/* Content */}
         <div className="relative" style={{ zIndex: 1, padding: '8mm 12mm 10mm 12mm' }}>
-          {/* Header - logo is already in watermark image, just add title */}
           <div className="flex items-start justify-center mb-0" style={{ paddingTop: '8mm' }}>
             <div className="text-center">
               <h1 className="font-bold text-bidv-blue leading-tight tracking-wide" style={{ fontSize: '18pt', fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>ỦY NHIỆM CHI</h1>
@@ -58,16 +56,13 @@ export default function UNCPreview({ formData }: Props) {
             </div>
           </div>
 
-          {/* Bordered content area - no top border */}
           <div style={{ marginTop: '3mm' }}>
-            {/* Date */}
             <div className="text-right" style={{ padding: '1mm 3mm' }}>
               <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày</span>
               <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Date: </span>
               <span className="font-bold" style={{ fontSize: '9.5pt' }}>{formData.date}</span>
             </div>
 
-            {/* Payer Section */}
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', borderTop: '1px solid hsl(0 0% 12% / 0.4)', padding: '0 3mm 1mm 3mm' }}>
               <div className="bg-bidv-blue/10 -mx-[3mm] px-[3mm] py-[0.5mm] -mt-0">
                 <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
@@ -76,24 +71,27 @@ export default function UNCPreview({ formData }: Props) {
                 </div>
                 <div style={{ minHeight: '1.6em', lineHeight: '1.8' }}>{formData.payerName || '\u00A0'}</div>
               </div>
-              <FieldRow label="Địa chỉ" sublabel="Address" value={formData.payerAddress} labelWidth="195px" />
-              <FieldRow label="Số tài khoản trích nợ" sublabel="Dr A/C No" value={formData.payerAccount} mono labelWidth="195px" />
-              <FieldRow label="Tại Ngân hàng" sublabel="At Bank" value={formData.payerBank} labelWidth="195px" />
+              <FieldRow label="Địa chỉ" sublabel="Address" value={formData.payerAddress} />
+              <FieldRow label="Số tài khoản trích nợ" sublabel="Dr A/C No" value={formData.payerAccount} mono />
+              <FieldRow label="Tại Ngân hàng" sublabel="At Bank" value={formData.payerBank} />
             </div>
 
-            {/* Amount + Exchange & Fee */}
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
-              <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
-                <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in figures:</span>
-                <span className="font-bold font-mono tracking-wider flex-1" style={{ fontSize: '11pt' }}>{displayAmount}</span>
-                {displayAmount && <span className="font-bold" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
+              {/* Fix lỗi VNĐ bám sát con số */}
+              <div style={{ lineHeight: '1.8' }}>
+                <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
+                <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Amount in figures: </span>
+                <span className="font-bold font-mono tracking-wider" style={{ fontSize: '11pt' }}>{displayAmount}</span>
+                {displayAmount && <span className="font-bold ml-1.5" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
               </div>
-              <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
-                <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
-                <span className="flex-1">{formData.amountWords || '\u00A0'}</span>
+
+              {/* Fix lỗi "Số tiền bằng chữ" khi xuống dòng tự động về đầu dòng */}
+              <div style={{ lineHeight: '1.8' }}>
+                <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
+                <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Amount in words: </span>
+                <span style={{ wordBreak: 'break-word' }}>{formData.amountWords || '\u00A0'}</span>
               </div>
+
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
                 <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
@@ -102,99 +100,3 @@ export default function UNCPreview({ formData }: Props) {
                 <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
                 <DottedValue value="" />
               </div>
-              <div style={{ lineHeight: '1.8' }}>
-                <div className="flex gap-6 items-center">
-                  <span>
-                    <Checkbox checked={formData.feeType === 'deduct'} />
-                    <span className="font-bold text-bidv-blue">Phí trong số tiền chuyển</span>
-                    <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Deduct</span>
-                  </span>
-                  <span>
-                    <Checkbox checked={formData.feeType === 'cash'} />
-                    <span className="font-bold text-bidv-blue">Phí thu từ tiền mặt</span>
-                    <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
-                  </span>
-                </div>
-                <div>
-                  <Checkbox checked={formData.feeType === 'account'} />
-                  <span className="font-bold text-bidv-blue">Phí thu từ tài khoản</span>
-                  <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Beneficiary Section */}
-            <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
-              <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} labelWidth="165px" />
-              <div className="flex gap-3">
-                <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
-                  <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số CCCD/HC</span>
-                  <span className="italic text-ink" style={{ fontSize: '8pt' }}>/ID No:</span>
-                  <DottedValue value={formData.beneficiaryCCCD} mono />
-                </div>
-                <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
-                  <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày cấp</span>
-                  <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Date:</span>
-                  <DottedValue value={formData.cccdDate} />
-                </div>
-              </div>
-              <FieldRow label="Nơi cấp" sublabel="Place" value={formData.cccdPlace} labelWidth="165px" />
-              <FieldRow label="Địa chỉ" sublabel="Address" value={formData.beneficiaryAddress} labelWidth="165px" />
-              <FieldRow label="Số tài khoản" sublabel="Ben's A/C No" value={formData.beneficiaryAccount} mono labelWidth="165px" />
-              <FieldRow label="Tại Ngân hàng" sublabel="At Bank" value={formData.beneficiaryBank} labelWidth="165px" />
-            </div>
-
-            {/* Remarks */}
-            <div className="border-l border-r border-b border-ink/40" style={{ padding: '1mm 3mm' }}>
-              <div style={{ lineHeight: '1.8' }}>
-                <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Nội dung</span>
-                <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Remarks: </span>
-                <span style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{formData.remarks || '\u00A0'}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Confirmation text */}
-          <p className="text-center" style={{ fontSize: '8pt', marginTop: '3mm', marginBottom: '4mm' }}>
-            <span className="font-bold text-bidv-blue" style={{ fontSize: '8.5pt' }}>Khách hàng xác nhận các thông tin trên là chính xác</span>
-            <span className="italic text-ink" style={{ fontSize: '8pt' }}> / Please sign to confirm the above information is accurate</span>
-          </p>
-
-          {/* Signatures */}
-          <div className="grid grid-cols-4 gap-x-3 text-center" style={{ fontSize: '8pt', marginTop: '2mm' }}>
-            <div>
-              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Kế toán trưởng</p>
-              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Chief Accountant</p>
-              <p className="italic text-ink/50 mt-0.5" style={{ fontSize: '6.5pt' }}>(Ký và ghi rõ họ tên)</p>
-              <p className="italic text-ink/50" style={{ fontSize: '6.5pt' }}>Signature & full name</p>
-              <div style={{ height: '55px' }} />
-            </div>
-            <div>
-              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Chủ tài khoản</p>
-              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Accountholder</p>
-              <p className="italic text-ink/50 mt-0.5" style={{ fontSize: '6.5pt' }}>(Ký và ghi rõ họ tên)</p>
-              <p className="italic text-ink/50" style={{ fontSize: '6.5pt' }}>Signature & full name</p>
-              <div style={{ height: '55px' }} />
-            </div>
-            <div>
-              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Giao dịch viên</p>
-              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Teller</p>
-              <div style={{ height: '65px' }} />
-            </div>
-            <div>
-              <p className="font-bold uppercase text-bidv-blue" style={{ fontSize: '8.5pt' }}>Kiểm soát viên</p>
-              <p className="italic text-ink" style={{ fontSize: '7pt' }}>Supervisor</p>
-              <div style={{ height: '65px' }} />
-            </div>
-          </div>
-
-          {/* Thank you message - pushed down 6cm from signatures */}
-          <div className="text-center" style={{ fontSize: '7.5pt', marginTop: '60mm' }}>
-            <p className="font-bold text-bidv-blue">Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV</p>
-            <p className="italic text-ink">Thank you for using BIDV's services</p>
-          </div>
-        </div>
-      </div>
-    </main>
-  );
-}
