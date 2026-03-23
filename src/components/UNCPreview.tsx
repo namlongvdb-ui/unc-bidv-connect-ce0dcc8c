@@ -95,15 +95,20 @@ export default function UNCPreview({ formData }: Props) {
                 <span className="flex-1 pb-0.5 min-h-[1.2em]" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{formData.amountWords || '\u00A0'}</span>
               </div>
               <div className="flex gap-3 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
-   <div className="flex gap-1 items-baseline">
+  <div className="flex items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
+  {/* Nhóm 1: Quy đổi - Giữ nguyên gap nhỏ để chữ Việt/Anh/DottedValue gần nhau */}
+  <div className="flex gap-1 items-baseline">
     <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
-    <span className="italic text-ink text-[7.5pt]">/Request for changing into:</span>
+    <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
     <DottedValue value={formData.exchangeTo} />
   </div>
-  <div className="flex gap-1.5 items-baseline">
+
+  {/* Nhóm 2: Tỷ giá - Dùng style marginLeft để đẩy ra xa chính xác 1cm */}
+  <div className="flex gap-1 items-baseline" style={{ marginLeft: '1cm' }}>
     <span className="font-bold whitespace-nowrap text-bidv-blue">Tỷ giá</span>
-    <span className="italic text-ink text-[7.5pt]">/Ex rate:</span>
+    <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
     <DottedValue value={formData.exchangeRate} />
+  </div>
   </div>
   </div>
               <div className="flex gap-4 items-center" style={{ lineHeight: '1.8' }}>
