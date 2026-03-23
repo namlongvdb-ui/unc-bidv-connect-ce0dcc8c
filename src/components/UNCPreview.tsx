@@ -94,14 +94,18 @@ export default function UNCPreview({ formData }: Props) {
                 <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
                 <span className="flex-1 pb-0.5 min-h-[1.2em]" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{formData.amountWords || '\u00A0'}</span>
               </div>
-              <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
-                <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
-                <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Request for changing into:</span>
-                <DottedValue value={formData.exchangeTo} />
-                <span className="font-bold whitespace-nowrap ml-1 text-bidv-blue">Tỷ giá</span>
-                <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
-                <DottedValue value={formData.exchangeRate} />
-              </div>
+              <div className="flex gap-3 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
+   <div className="flex gap-1 items-baseline">
+    <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
+    <span className="italic text-ink text-[7.5pt]">/Request for changing into:</span>
+    <DottedValue value={formData.exchangeTo} />
+  </div>
+  <div className="flex gap-1 items-baseline">
+    <span className="font-bold whitespace-nowrap text-bidv-blue">Tỷ giá</span>
+    <span className="italic text-ink text-[7.5pt]">/Ex rate:</span>
+    <DottedValue value={formData.exchangeRate} />
+  </div>
+  </div>
               <div className="flex gap-4 items-center" style={{ lineHeight: '1.8' }}>
                 <span>
                   <Checkbox checked={formData.feeType === 'deduct'} />
