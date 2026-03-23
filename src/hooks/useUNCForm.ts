@@ -8,6 +8,8 @@ export interface UNCFormData {
   payerBank: string;
   amount: string;
   amountWords: string;
+  exchangeTo: string;
+  exchangeRate: string;
   feeType: 'deduct' | 'cash' | 'account';
   beneficiaryName: string;
   beneficiaryCCCD: string;
