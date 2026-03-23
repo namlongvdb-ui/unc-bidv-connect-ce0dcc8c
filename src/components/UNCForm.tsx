@@ -113,17 +113,37 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
             <label className="block text-xs font-medium text-muted-foreground mb-1">Số tiền bằng chữ <span className="font-normal italic text-muted-foreground/70">Amount in words</span></label>
             <p className="text-sm text-foreground min-h-[2em] border-b border-border py-2">{formData.amountWords || '\u00A0'}</p>
           </div>
-          <div>
-            <label className="block text-xs font-medium text-muted-foreground mb-1">Loại phí <span className="font-normal italic text-muted-foreground/70">Fee type</span></label>
-            <div className="flex gap-4 mt-1">
-              {(['deduct', 'cash', 'account'] as const).map(ft => (
-                <label key={ft} className="flex items-center gap-1.5 text-sm cursor-pointer">
-                  <input type="radio" name="feeType" checked={formData.feeType === ft} onChange={() => updateField('feeType', ft)} className="accent-primary" />
-                  {ft === 'deduct' ? 'Trích nợ' : ft === 'cash' ? 'Tiền mặt' : 'Tài khoản'}
-                </label>
-              ))}
-            </div>
-          </div>
+         <div>
+  <label className="block text-xs font-medium text-muted-foreground mb-1">
+    Loại phí <span className="font-normal italic text-muted-foreground/70">Fee type</span>
+  </label>
+  <div className="flex gap-4 mt-1">
+    {(['deduct', 'cash', 'account'] as const).map(ft => (
+      <label key={ft} className="flex items-center gap-1.5 text-sm cursor-pointer">
+        <input 
+          type="radio" 
+          name="feeType" 
+          // Giữ checked để hiển thị dấu chấm
+          checked={formData.feeType === ft} 
+          // Sử dụng onClick để xử lý logic bật/tắt
+          onClick={() => {
+            if (formData.feeType === ft) {
+              // Nếu đang chọn chính nó thì cập nhật thành chuỗi rỗng (bỏ chọn)
+              updateField('feeType', '');
+            } else {
+              // Nếu chưa chọn thì cập nhật giá trị mới
+              updateField('feeType', ft);
+            }
+          }}
+          // Chặn onChange mặc định để tránh xung đột
+          onChange={() => {}} 
+          className="accent-primary" 
+        />
+        {ft === 'deduct' ? 'Trích nợ' : ft === 'cash' ? 'Tiền mặt' : 'Tài khoản'}
+      </label>
+    ))}
+  </div>
+</div>
           {/* Thay đổi grid-cols-2 thành grid-cols-3 (tổng 3 phần) */}
    <div className="grid grid-cols-3 gap-3">
   {/* Thêm class col-span-2 để ô này chiếm 2 phần */}
