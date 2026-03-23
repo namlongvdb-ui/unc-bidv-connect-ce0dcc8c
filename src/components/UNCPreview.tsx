@@ -177,9 +177,20 @@ export default function UNCPreview({ formData }: Props) {
             </div>
           </div>
 
-          <div className="text-center" style={{ fontSize: '7.5pt', marginTop: '60mm' }}>
-            <p className="font-bold text-bidv-blue">Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV</p>
-            <p className="italic text-ink">Thank you for using BIDV's services</p>
+          {/* CHÂN TRANG - Đã loại bỏ thanh kẻ ngang hoàn toàn */}
+          <div 
+            className="absolute left-0 right-0 text-center" 
+            style={{ bottom: '15mm' }}
+          >
+            {/* Đã xóa sạch class border-t và border-bidv-blue/20 */}
+            <div className="inline-block w-[80%] pt-2">
+              <p className="font-bold text-bidv-blue" style={{ fontSize: '9pt' }}>
+                Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV
+              </p>
+              <p className="italic text-ink" style={{ fontSize: '7.5pt' }}>
+                Thank you for using BIDV's services
+              </p>
+            </div>
           </div>
         </div>
       </div>
