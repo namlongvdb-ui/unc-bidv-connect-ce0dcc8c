@@ -10,7 +10,7 @@ const FieldRow = ({ label, sublabel, value, mono, className = "" }: { label: str
   <div className={`block w-full ${className}`} style={{ lineHeight: '1.8', marginBottom: '1px' }}>
     <span className="font-bold text-bidv-blue mr-1" style={{ fontSize: '9.5pt' }}>{label}</span>
     <span className="italic text-ink mr-2" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
-    <span className={`${mono ? 'font-mono tracking-wider' : ''} break-words`} style={{ fontSize: '9.5pt' }}>
+    <span className={`${mono ? 'font-mono tracking-wider' : ''} break-words`} style={{ fontSize: '10.5pt' }}>
       {value || '\u00A0'}
     </span>
   </div>
