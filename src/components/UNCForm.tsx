@@ -40,7 +40,6 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
   const [showHistory, setShowHistory] = useState(false);
   const [exporting, setExporting] = useState(false);
 
-  // Thiết lập thông tin mặc định khi mở chương trình
   useEffect(() => {
     if (!formData.payerName) {
       updateField('payerName', 'NHPTVN-Chi nhánh KV Bắc Đông Bắc, PGD Cao Bằng');
@@ -77,9 +76,7 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
     }
   };
 
-  const displayAmount = formData.amount
-    ? formatCurrency(parseInt(formData.amount))
-    : '';
+  const displayAmount = formData.amount ? formatCurrency(parseInt(formData.amount)) : '';
 
   const handleSelectBeneficiary = (b: Beneficiary) => {
     updateField('beneficiaryName', b.name);
@@ -95,21 +92,26 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
       account: formData.beneficiaryAccount,
       bank: formData.beneficiaryBank,
     });
-    // Tự động mở danh sách sau khi lưu để người dùng thấy kết quả
     setShowPicker(true);
   };
 
   return (
     <aside className="w-[420px] shrink-0 bg-card border-r border-border flex flex-col h-screen overflow-hidden">
-      {/* Header */}
-      <div className="bg-primary px-5 py-4 text-primary-foreground">
-        <h2 className="text-lg font-bold tracking-wide">ỦY NHIỆM CHI</h2>
-        <p className="text-xs opacity-80">Nhập thông tin để tạo UNC</p>
+      {/* Header đã căn giữa và thêm chữ chạy */}
+      <div className="bg-primary px-5 py-4 text-primary-foreground text-center">
+        <h2 className="text-lg font-bold tracking-wide uppercase">Ủy nhiệm chi</h2>
+        <p className="text-xs opacity-80 mb-2">Nhập thông tin để tạo UNC</p>
+        
+        {/* Dòng chữ chạy bản quyền */}
+        <div className="w-full overflow-hidden border-t border-primary-foreground/20 pt-2">
+          <marquee behavior="scroll" direction="left" className="text-[10px] font-medium tracking-tight opacity-90">
+            Copyright by Trần Nam Long NHPTVN-Chi nhánh KV Bắc Đông Bắc, PGD Cao Bằng
+          </marquee>
+        </div>
       </div>
 
       {/* Scrollable form */}
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-        {/* Date */}
         <InputField label="Ngày" sublabel="Date" value={formData.date} onChange={v => updateField('date', v)} placeholder="DD/MM/YYYY" />
 
         {/* Payer section */}
@@ -121,7 +123,7 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
           <InputField label="Tại Ngân hàng" sublabel="At Bank" value={formData.payerBank} onChange={v => updateField('payerBank', v)} />
         </div>
 
-        {/* Amount */}
+        {/* Amount section */}
         <div className="space-y-3">
           <p className="text-xs font-bold text-primary uppercase tracking-wider">Số tiền</p>
           <InputField label="Số tiền bằng số" sublabel="Amount in figures" value={displayAmount} onChange={handleAmountChange} placeholder="0" mono />
@@ -130,7 +132,6 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
             <p className="text-sm text-foreground min-h-[2em] border-b border-border py-2">{formData.amountWords || '\u00A0'}</p>
           </div>
           
-          {/* Fee Type với Logic Bấm để bỏ chọn */}
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1">Loại phí <span className="font-normal italic text-muted-foreground/70">Fee type</span></label>
             <div className="flex gap-4 mt-1">
@@ -141,11 +142,8 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
                     name="feeType" 
                     checked={formData.feeType === ft} 
                     onClick={() => {
-                      if (formData.feeType === ft) {
-                        updateField('feeType', '');
-                      } else {
-                        updateField('feeType', ft);
-                      }
+                      if (formData.feeType === ft) updateField('feeType', '');
+                      else updateField('feeType', ft);
                     }}
                     onChange={() => {}} 
                     className="accent-primary" 
@@ -156,7 +154,6 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
             </div>
           </div>
 
-          {/* Quy đổi & Tỷ giá với tỷ lệ 2:1 */}
           <div className="grid grid-cols-3 gap-3">
             <div className="col-span-2">
               <InputField label="Đề nghị quy đổi ra" sublabel="Changing into" value={formData.exchangeTo} onChange={v => updateField('exchangeTo', v)} />
@@ -165,50 +162,31 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
           </div>
         </div>
 
-        {/* Beneficiary section với Nút bấm chuyên nghiệp */}
+        {/* Beneficiary section */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-xs font-bold text-primary uppercase tracking-wider">Người hưởng</p>
             <div className="flex gap-2">
               {beneficiaries.length > 0 && (
-                <button 
-                  onClick={() => setShowPicker(!showPicker)} 
-                  className="text-xs px-2 py-1 border border-primary text-primary rounded hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
+                <button onClick={() => setShowPicker(!showPicker)} className="text-xs px-2 py-1 border border-primary text-primary rounded hover:bg-primary hover:text-primary-foreground transition-colors">
                   {showPicker ? 'Đóng DS' : 'Chọn từ DS'}
                 </button>
               )}
-              <button 
-                onClick={handleSaveCurrent} 
-                className="text-xs px-2 py-1 bg-accent text-accent-foreground rounded shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-1"
-              >
+              <button onClick={handleSaveCurrent} className="text-xs px-2 py-1 bg-accent text-accent-foreground rounded shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-1">
                 <span>💾</span> Lưu người hưởng
               </button>
             </div>
           </div>
 
-          {/* Danh sách người hưởng đã lưu */}
           {showPicker && beneficiaries.length > 0 && (
             <div className="bg-muted rounded-md p-2 space-y-1 max-h-40 overflow-y-auto border border-border shadow-inner">
               {beneficiaries.map(b => (
-                <div 
-                  key={b.id} 
-                  className="flex items-center justify-between text-xs p-2 hover:bg-background rounded cursor-pointer border-b border-border/50 last:border-0" 
-                  onClick={() => handleSelectBeneficiary(b)}
-                >
+                <div key={b.id} className="flex items-center justify-between text-xs p-2 hover:bg-background rounded cursor-pointer border-b border-border/50 last:border-0" onClick={() => handleSelectBeneficiary(b)}>
                   <div className="flex flex-col">
                     <span className="font-bold">{b.name}</span>
                     <span className="text-muted-foreground">{b.account} - {b.bank}</span>
                   </div>
-                  <button 
-                    onClick={e => { 
-                      e.stopPropagation(); 
-                      onRemoveBeneficiary(b.id); 
-                    }} 
-                    className="p-1 hover:bg-destructive/10 text-destructive rounded transition-colors"
-                  >
-                    Xóa
-                  </button>
+                  <button onClick={e => { e.stopPropagation(); onRemoveBeneficiary(b.id); }} className="p-1 hover:bg-destructive/10 text-destructive rounded transition-colors">Xóa</button>
                 </div>
               ))}
             </div>
@@ -225,11 +203,10 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
           <InputField label="Tại Ngân hàng" sublabel="At Bank" value={formData.beneficiaryBank} onChange={v => updateField('beneficiaryBank', v)} />
         </div>
 
-        {/* Remarks */}
         <InputField label="Nội dung" sublabel="Remarks" value={formData.remarks} onChange={v => updateField('remarks', v)} placeholder="Nội dung chuyển khoản" />
       </div>
 
-      {/* Action buttons */}
+      {/* Footer Actions */}
       <div className="px-5 py-3 border-t border-border space-y-2 bg-card">
         <div className="flex gap-2">
           <button onClick={handleExportPDF} disabled={exporting} className="flex-1 bg-primary text-primary-foreground py-2.5 rounded-md font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-50">
