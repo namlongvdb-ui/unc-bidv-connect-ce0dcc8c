@@ -39,17 +39,18 @@ export default function UNCPreview({ formData }: Props) {
           lineHeight: '1.6',
         }}
       >
-       {/* WATERMARK CẢI TIẾN: Giữ logo an toàn, không sát mép, đầu trang kín họa tiết */}
-<div 
-  className="absolute inset-0 pointer-events-none" 
-  style={{ 
-    zIndex: 0,
-    backgroundImage: `url(${bidvWatermark})`,
-    backgroundSize: '105%', // Phóng nhẹ để lấp đầy khi dịch chuyển
-    backgroundPosition: 'center -20px', // Đẩy nhẹ lên trên để lấp kín đầu trang
-    backgroundRepeat: 'no-repeat',
-  }} 
-/>
+        {/* WATERMARK: Logo dịch phải 1cm, đầu trang kín họa tiết, hoa sen lùi xuống */}
+        <div 
+          className="absolute inset-0 pointer-events-none" 
+          style={{ 
+            zIndex: 0,
+            backgroundImage: `url(${bidvWatermark})`,
+            backgroundSize: '105%', 
+            backgroundPosition: '10mm -20px', 
+            backgroundRepeat: 'no-repeat',
+          }} 
+        />
+
         {/* Content Area */}
         <div className="relative h-full" style={{ zIndex: 1, padding: '10mm 15mm' }}>
           
@@ -68,7 +69,7 @@ export default function UNCPreview({ formData }: Props) {
           {/* Bordered Box */}
           <div className="border border-ink/40 w-full">
             
-            {/* 1. Phần trả tiền */}
+            {/* 1. Phần trích nợ */}
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', borderTop: '1px solid hsl(0 0% 12% / 0.4)', padding: '0 3mm 1mm 3mm' }}>
               <div className="bg-bidv-blue/10 -mx-[3mm] px-[3mm] py-[0.5mm] -mt-0">
                 <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
@@ -82,7 +83,7 @@ export default function UNCPreview({ formData }: Props) {
               <FieldRow label="Tại Ngân hàng" sublabel="At Bank" value={formData.payerBank} />
             </div>
 
-            {/* 2. Số tiền & Quy đổi & Phí */}
+            {/* 2. Số tiền & Phí */}
             <div className="p-3 border-b border-ink/40">
               <div className="flex items-baseline flex-wrap">
                 <span className="font-bold text-bidv-blue mr-1" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
@@ -123,7 +124,7 @@ export default function UNCPreview({ formData }: Props) {
               </div>
             </div>
 
-            {/* 3. Người hưởng */}
+            {/* 3. Người thụ hưởng */}
             <div className="p-3 border-b border-ink/40">
               <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} />
               <div className="grid grid-cols-2 gap-4">
@@ -136,7 +137,7 @@ export default function UNCPreview({ formData }: Props) {
               <FieldRow label="Tại Ngân hàng" sublabel="At Bank" value={formData.beneficiaryBank} />
             </div>
 
-            {/* 4. Nội dung */}
+            {/* 4. Nội dung thanh toán */}
             <div className="p-3">
               <div className="block w-full" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold text-bidv-blue mr-1">Nội dung</span>
