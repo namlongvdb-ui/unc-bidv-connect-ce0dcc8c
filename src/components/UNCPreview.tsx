@@ -104,7 +104,7 @@ export default function UNCPreview({ formData }: Props) {
   </div>
 
   {/* Nhóm 2: Tỷ giá - Dùng style marginLeft để đẩy ra xa chính xác 1cm */}
-  <div className="flex gap-1 items-baseline" style={{ marginLeft: '1cm' }}>
+  <div className="flex gap-1 items-baseline" style={{ marginLeft: '2cm' }}>
     <span className="font-bold whitespace-nowrap text-bidv-blue">Tỷ giá</span>
     <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
     <DottedValue value={formData.exchangeRate} />
