@@ -96,20 +96,19 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
   };
 
   return (
-    <aside className="w-[420px] shrink-0 bg-card border-r border-border flex flex-col h-screen overflow-hidden">
-      {/* Header đã căn giữa và thêm chữ chạy */}
-      <div className="bg-primary px-5 py-4 text-primary-foreground text-center">
+   <aside className="w-[420px] shrink-0 bg-card border-r border-border flex flex-col h-screen overflow-hidden">
+      {/* Header căn giữa và Chữ chạy bằng CSS Animation */}
+      <div className="bg-primary px-5 py-4 text-primary-foreground text-center relative overflow-hidden">
         <h2 className="text-lg font-bold tracking-wide uppercase">Ủy nhiệm chi</h2>
         <p className="text-xs opacity-80 mb-2">Nhập thông tin để tạo UNC</p>
         
-        {/* Dòng chữ chạy bản quyền */}
-        <div className="w-full overflow-hidden border-t border-primary-foreground/20 pt-2">
-          <marquee behavior="scroll" direction="left" className="text-[10px] font-medium tracking-tight opacity-90">
+        {/* Container cho chữ chạy */}
+        <div className="w-full border-t border-primary-foreground/20 pt-2 overflow-hidden whitespace-nowrap">
+          <div className="inline-block animate-marquee-infinite text-[10px] font-medium opacity-90">
             Copyright by Trần Nam Long NHPTVN-Chi nhánh KV Bắc Đông Bắc, PGD Cao Bằng
-          </marquee>
+          </div>
         </div>
       </div>
-
       {/* Scrollable form */}
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
         <InputField label="Ngày" sublabel="Date" value={formData.date} onChange={v => updateField('date', v)} placeholder="DD/MM/YYYY" />
