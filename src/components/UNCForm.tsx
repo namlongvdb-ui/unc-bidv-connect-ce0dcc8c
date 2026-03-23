@@ -178,9 +178,7 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
     </button>
   </div>
 </div>
-          )}
-
-          <InputField label="Tên người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} />
+         <InputField label="Tên người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} />
           <InputField label="Số CCCD/HC" sublabel="ID No" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
           <div className="grid grid-cols-2 gap-3">
             <InputField label="Ngày cấp" sublabel="Date" value={formData.cccdDate} onChange={v => updateField('cccdDate', v)} />
