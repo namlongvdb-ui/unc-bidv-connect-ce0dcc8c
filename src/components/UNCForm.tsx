@@ -102,13 +102,30 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
         <h2 className="text-lg font-bold tracking-wide uppercase">Ủy nhiệm chi</h2>
         <p className="text-xs opacity-80 mb-2">Nhập thông tin để tạo UNC</p>
         
-        {/* Container cho chữ chạy */}
-        <div className="w-full border-t border-primary-foreground/20 pt-2 overflow-hidden whitespace-nowrap">
-          <div className="inline-block animate-marquee-infinite text-[10px] font-medium opacity-90">
-                  Copyright by Trần Nam Long VDB-Chi nhánh KV Bắc Đông Bắc, PGD Cao Bằng            
-          </div>
-        </div>
-      </div>
+       <div className="bg-primary px-5 py-4 text-primary-foreground text-center relative overflow-hidden">
+  {/* CSS trực tiếp để tạo hiệu ứng chạy chữ */}
+  <style>{`
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .animate-copy-right {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 15s linear infinite;
+    }
+  `}</style>
+
+  <h2 className="text-lg font-bold tracking-wide uppercase">Ủy nhiệm chi</h2>
+  <p className="text-xs opacity-80 mb-2">Nhập thông tin để tạo UNC</p>
+  
+  {/* Vùng chứa chữ chạy */}
+  <div className="w-full border-t border-primary-foreground/20 pt-2 overflow-hidden">
+    <div className="animate-copy-right text-[10px] font-medium opacity-90">
+      Copyright by Trần Nam Long NHPTVN-Chi nhánh KV Bắc Đông Bắc, PGD Cao Bằng
+    </div>
+  </div>
+</div>
       {/* Scrollable form */}
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
         <InputField label="Ngày" sublabel="Date" value={formData.date} onChange={v => updateField('date', v)} placeholder="DD/MM/YYYY" />
