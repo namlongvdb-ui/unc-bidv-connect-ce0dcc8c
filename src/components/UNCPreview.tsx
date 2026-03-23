@@ -7,7 +7,7 @@ interface Props {
 }
 
 const DottedValue = ({ value, mono }: { value: string; mono?: boolean }) => (
-  <span className={`border-b border-dotted border-ink/30 flex-1 pb-0.5 min-h-[1.2em] ${mono ? 'font-mono tracking-[0.12em]' : ''}`}>
+  <span className={`flex-1 pb-0.5 min-h-[1.2em] break-words overflow-wrap-anywhere ${mono ? 'font-mono tracking-[0.12em]' : ''}`} style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
     {value || '\u00A0'}
   </span>
 );
@@ -92,10 +92,7 @@ export default function UNCPreview({ formData }: Props) {
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
                 <span className="italic text-ink whitespace-nowrap" style={{ fontSize: '8pt' }}>/Amount in words:</span>
-                <span className="flex-1 border-b border-dotted border-ink/30 pb-0.5 min-h-[1.2em]">{formData.amountWords || '\u00A0'}</span>
-              </div>
-              <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>
-                {formData.amountWords && formData.amountWords.length > 60 ? '' : '\u00A0'}
+                <span className="flex-1 pb-0.5 min-h-[1.2em]" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{formData.amountWords || '\u00A0'}</span>
               </div>
               <div className="flex gap-1.5 items-baseline" style={{ lineHeight: '1.8', fontSize: '9pt' }}>
                 <span className="font-bold whitespace-nowrap text-bidv-blue">Đề nghị quy đổi ra</span>
@@ -127,7 +124,6 @@ export default function UNCPreview({ formData }: Props) {
             {/* Beneficiary Section */}
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
               <FieldRow label="Người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} />
-              <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>{'\u00A0'}</div>
               <div className="flex gap-3">
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số CCCD/HC</span>
@@ -153,7 +149,7 @@ export default function UNCPreview({ formData }: Props) {
             {/* Remarks */}
             <div className="border-l border-r border-b border-ink/40" style={{ padding: '1mm 3mm' }}>
               <FieldRow label="Nội dung" sublabel="Remarks" value={formData.remarks} />
-              <div className="border-b border-dotted border-ink/30" style={{ minHeight: '1.6em', lineHeight: '1.8' }}>{'\u00A0'}</div>
+              
             </div>
           </div>
 
