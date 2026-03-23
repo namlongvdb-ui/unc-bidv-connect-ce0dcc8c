@@ -102,18 +102,20 @@ export default function UNCPreview({ formData }: Props) {
                 <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Ex rate:</span>
                 <DottedValue value={formData.exchangeRate} />
               </div>
-              <div className="grid grid-cols-3 items-center" style={{ lineHeight: '1.8' }}>
+              <div className="flex gap-4 items-center" style={{ lineHeight: '1.8' }}>
                 <span>
                   <Checkbox checked={formData.feeType === 'deduct'} />
                   <span className="font-bold text-bidv-blue">Phí trong số tiền chuyển</span>
                   <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Deduct</span>
                 </span>
-                <span className="text-center">
+                <span>
                   <Checkbox checked={formData.feeType === 'cash'} />
                   <span className="font-bold text-bidv-blue">Phí thu từ tiền mặt</span>
                   <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Fee in cash</span>
                 </span>
-                <span className="text-right">
+              </div>
+              <div style={{ lineHeight: '1.8' }}>
+                <span>
                   <Checkbox checked={formData.feeType === 'account'} />
                   <span className="font-bold text-bidv-blue">Phí thu từ tài khoản</span>
                   <span className="italic text-ink" style={{ fontSize: '7.5pt' }}>/Fee collected from A/C:</span>
