@@ -36,11 +36,13 @@ export default function UNCPreview({ formData }: Props) {
         className="relative bg-paper shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] origin-top"
         style={{
           width: '210mm',
+          height: '297mm', // QUAN TRỌNG: Ép cứng chiều cao chuẩn A4
           minHeight: '297mm',
           fontFamily: '"Be Vietnam Pro", sans-serif',
           fontSize: '9.5pt',
           color: 'hsl(0 0% 12%)',
           lineHeight: '1.7',
+          overflow: 'hidden', // Đảm bảo không có gì tràn ra ngoài khổ giấy
         }}
       >
         {/* Giữ nguyên Watermark theo code bạn gửi */}
@@ -48,6 +50,7 @@ export default function UNCPreview({ formData }: Props) {
           <img src={bidvWatermark} alt="" className="w-full h-full object-cover" style={{ opacity: 1 }} />
         </div>
 
+        {/* KHỐI NỘI DUNG CHÍNH (z-index: 1) */}
         <div className="relative" style={{ zIndex: 1, padding: '8mm 12mm 10mm 12mm' }}>
           <div className="flex items-start justify-center mb-0" style={{ paddingTop: '8mm' }}>
             <div className="text-center">
@@ -77,7 +80,6 @@ export default function UNCPreview({ formData }: Props) {
             </div>
 
             <div className="space-y-[1px] border-l border-r border-ink/40" style={{ borderBottom: '1px solid hsl(0 0% 12% / 0.4)', padding: '1mm 3mm' }}>
-              {/* Fix lỗi VNĐ bám sát con số */}
               <div style={{ lineHeight: '1.8' }}>
                 <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng số</span>
                 <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Amount in figures: </span>
@@ -85,7 +87,6 @@ export default function UNCPreview({ formData }: Props) {
                 {displayAmount && <span className="font-bold ml-1.5" style={{ fontSize: '9.5pt' }}>VNĐ</span>}
               </div>
 
-              {/* Fix lỗi "Số tiền bằng chữ" khi xuống dòng tự động về đầu dòng */}
               <div style={{ lineHeight: '1.8' }}>
                 <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Số tiền bằng chữ</span>
                 <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Amount in words: </span>
@@ -142,7 +143,6 @@ export default function UNCPreview({ formData }: Props) {
             </div>
 
             <div className="border-l border-r border-b border-ink/40" style={{ padding: '1mm 3mm' }}>
-              {/* Fix lỗi "Nội dung" khi xuống dòng tự động về đầu dòng */}
               <div style={{ lineHeight: '1.8' }}>
                 <span className="font-bold text-bidv-blue" style={{ fontSize: '9.5pt' }}>Nội dung</span>
                 <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Remarks: </span>
@@ -176,21 +176,20 @@ export default function UNCPreview({ formData }: Props) {
               <p className="italic text-ink" style={{ fontSize: '7pt' }}>Supervisor</p>
             </div>
           </div>
+        </div>
 
-          {/* CHÂN TRANG - Đã loại bỏ thanh kẻ ngang hoàn toàn */}
-          <div 
-            className="absolute left-0 right-0 text-center" 
-            style={{ bottom: '15mm' }}
-          >
-            {/* Đã xóa sạch class border-t và border-bidv-blue/20 */}
-            <div className="inline-block w-[80%] pt-2">
-              <p className="font-bold text-bidv-blue" style={{ fontSize: '9pt' }}>
-                Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV
-              </p>
-              <p className="italic text-ink" style={{ fontSize: '7.5pt' }}>
-                Thank you for using BIDV's services
-              </p>
-            </div>
+        {/* --- CHÂN TRANG ĐÃ DI CHUYỂN RA NGOÀI KHỐI NỘI DUNG ĐỂ CỐ ĐỊNH --- */}
+        <div 
+          className="absolute left-0 right-0 text-center" 
+          style={{ bottom: '15mm', zIndex: 2 }}
+        >
+          <div className="inline-block w-[80%] pt-2">
+            <p className="font-bold text-bidv-blue" style={{ fontSize: '9pt' }}>
+              Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV
+            </p>
+            <p className="italic text-ink" style={{ fontSize: '7.5pt' }}>
+              Thank you for using BIDV's services
+            </p>
           </div>
         </div>
       </div>
