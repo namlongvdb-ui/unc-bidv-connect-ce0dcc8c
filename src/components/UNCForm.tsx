@@ -51,7 +51,7 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
   const handleExportPDF = async () => {
     setExporting(true);
     try {
-      await exportUNCToPDF(formData);
+      await exportUNCToPDF();
       onSaveTransaction();
     } catch (e) {
       console.error('PDF export failed', e);
@@ -71,13 +71,30 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
     }
   };
 
-  // Logic mới: Cho phép bỏ chọn loại phí
   const handleFeeToggle = (id: string) => {
     if (formData.feeType === id) {
-      updateField('feeType', ''); // Nhấn lại cái đang chọn -> Bỏ chọn
+      updateField('feeType', '');
     } else {
-      updateField('feeType', id); // Nhấn cái mới -> Chọn
+      updateField('feeType', id);
     }
+  };
+
+  // Hàm bổ sung để lưu thông tin người hưởng vào danh bạ
+  const handleSaveBeneficiary = () => {
+    if (!formData.beneficiaryName || !formData.beneficiaryAccount) {
+      alert("Vui lòng nhập tên và số tài khoản người hưởng để lưu!");
+      return;
+    }
+    onSaveBeneficiary({
+      name: formData.beneficiaryName,
+      account: formData.beneficiaryAccount,
+      bank: formData.beneficiaryBank,
+      address: formData.beneficiaryAddress,
+      cccd: formData.beneficiaryCCCD,
+      cccdDate: formData.cccdDate,
+      cccdPlace: formData.cccdPlace
+    });
+    alert("Đã lưu người hưởng vào danh bạ!");
   };
 
   const displayAmount = formData.amount ? formatCurrency(parseInt(formData.amount)) : '';
@@ -100,7 +117,6 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-6">
         <InputField label="Ngày" sublabel="Date" value={formData.date} onChange={v => updateField('date', v)} placeholder="DD/MM/YYYY" />
 
-        {/* BÊN TRẢ TIỀN - Đã thêm Địa chỉ */}
         <div className="space-y-3 p-3 bg-muted/30 rounded-lg">
           <p className="text-xs font-bold text-primary uppercase tracking-wider border-b border-primary/20 pb-1">Bên trả tiền (Payer)</p>
           <InputField label="Tên tài khoản trích nợ" value={formData.payerName} onChange={v => updateField('payerName', v)} />
@@ -109,7 +125,6 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
           <InputField label="Tại Ngân hàng" value={formData.payerBank} onChange={v => updateField('payerBank', v)} />
         </div>
 
-        {/* SỐ TIỀN & PHÍ - Đã sửa logic Toggle */}
         <div className="space-y-3 p-3 bg-muted/30 rounded-lg">
           <InputField label="Số tiền bằng số" value={displayAmount} onChange={handleAmountChange} placeholder="" mono />
           <div>
@@ -150,11 +165,24 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
           </div>
         </div>
 
-        {/* NGƯỜI HƯỞNG */}
         <div className="space-y-3 p-3 bg-muted/30 rounded-lg">
           <div className="flex items-center justify-between border-b border-primary/20 pb-1">
             <p className="text-xs font-bold text-primary uppercase tracking-wider">Người hưởng (Beneficiary)</p>
-            <button onClick={() => setShowPicker(!showPicker)} className="text-[10px] px-2 py-0.5 bg-primary text-white rounded hover:bg-primary/90">Danh bạ</button>
+            <div className="flex gap-1">
+              <button 
+                onClick={handleSaveBeneficiary} 
+                className="text-[10px] px-2 py-0.5 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                title="Lưu vào danh bạ"
+              >
+                Lưu
+              </button>
+              <button 
+                onClick={() => setShowPicker(!showPicker)} 
+                className="text-[10px] px-2 py-0.5 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+              >
+                Danh bạ
+              </button>
+            </div>
           </div>
           
           <InputField label="Tên người hưởng" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} />
