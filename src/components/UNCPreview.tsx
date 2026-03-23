@@ -10,7 +10,7 @@ const FieldRow = ({ label, sublabel, value, mono, className = "" }: { label: str
   <div className={`block w-full ${className}`} style={{ lineHeight: '1.8', marginBottom: '1px' }}>
     <span className="font-bold text-bidv-blue mr-1" style={{ fontSize: '9.5pt' }}>{label}</span>
     <span className="italic text-ink mr-2" style={{ fontSize: '8pt' }}>/{sublabel}:</span>
-    <span className={`${mono ? 'font-mono tracking-wider' : ''} break-words`} style={{ fontSize: '10.5pt' }}>
+    <span className={`${mono ? 'font-mono tracking-wider' : ''} break-words`} style={{ fontSize: mono ? '10.5pt' : '9.5pt' }}>
       {value || '\u00A0'}
     </span>
   </div>
@@ -39,8 +39,11 @@ export default function UNCPreview({ formData }: Props) {
           lineHeight: '1.6',
         }}
       >
-        {/* Watermark */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+        {/* Watermark - Đã lùi xuống 10mm (1cm) */}
+        <div 
+          className="absolute left-0 right-0 bottom-0 pointer-events-none overflow-hidden" 
+          style={{ zIndex: 0, top: '10mm' }} 
+        >
           <img src={bidvWatermark} alt="" className="w-full h-full object-cover opacity-100" />
         </div>
 
@@ -56,7 +59,6 @@ export default function UNCPreview({ formData }: Props) {
           <div className="text-right mb-2">
             <span className="font-bold text-bidv-blue">Ngày</span>
             <span className="italic text-ink">/Date: </span>
-            {/* Xóa border-b và border-dotted */}
             <span className="font-bold px-2">{formData.date || '    /    /202  '}</span>
           </div>
 
@@ -102,13 +104,11 @@ export default function UNCPreview({ formData }: Props) {
                 <div className="inline-block">
                   <span className="font-bold text-bidv-blue">Đề nghị quy đổi ra</span>
                   <span className="italic text-ink text-[8pt]">/Request for changing into:</span>
-                  {/* Xóa gạch chân chấm chấm */}
                   <span className="ml-2 font-bold">{formData.exchangeTo || '\u00A0'}</span>
                 </div>
                 <div className="inline-block">
                   <span className="font-bold text-bidv-blue">Tỷ giá</span>
                   <span className="italic text-ink text-[8pt]">/Ex rate:</span>
-                  {/* Xóa gạch chân chấm chấm */}
                   <span className="ml-2 font-bold">{formData.exchangeRate || '\u00A0'}</span>
                 </div>
               </div>
@@ -169,12 +169,11 @@ export default function UNCPreview({ formData }: Props) {
             </div>
           </div>
 
-          {/* CHÂN TRANG - Đã loại bỏ thanh kẻ ngang hoàn toàn */}
+          {/* Chân trang */}
           <div 
             className="absolute left-0 right-0 text-center" 
             style={{ bottom: '15mm' }}
           >
-            {/* Đã xóa sạch class border-t và border-bidv-blue/20 */}
             <div className="inline-block w-[80%] pt-2">
               <p className="font-bold text-bidv-blue" style={{ fontSize: '9pt' }}>
                 Cảm ơn quý khách hàng đã sử dụng dịch vụ của BIDV
