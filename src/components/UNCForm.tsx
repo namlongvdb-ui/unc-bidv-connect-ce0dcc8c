@@ -158,28 +158,26 @@ export default function UNCForm({ formData, updateField, beneficiaries, onSaveBe
         {/* Beneficiary */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider">Người hưởng</p>
-            <div className="flex gap-2">
-              {beneficiaries.length > 0 && (
-                <button onClick={() => setShowPicker(!showPicker)} className="text-xs text-primary hover:underline">
-                  Chọn từ DS
-                </button>
-              )}
-              <button onClick={handleSaveCurrent} className="text-xs text-accent hover:underline">
-                Lưu người hưởng
-              </button>
-            </div>
-          </div>
-
-          {showPicker && (
-            <div className="bg-muted rounded-md p-2 space-y-1 max-h-32 overflow-y-auto">
-              {beneficiaries.map(b => (
-                <div key={b.id} className="flex items-center justify-between text-xs p-1.5 hover:bg-background rounded cursor-pointer" onClick={() => handleSelectBeneficiary(b)}>
-                  <span>{b.name} - {b.account}</span>
-                  <button onClick={e => { e.stopPropagation(); onRemoveBeneficiary(b.id); }} className="text-destructive hover:underline">Xóa</button>
-                </div>
-              ))}
-            </div>
+  <p className="text-xs font-bold text-primary uppercase tracking-wider">Người hưởng</p>
+  <div className="flex gap-2">
+    {beneficiaries.length > 0 && (
+      <button 
+        onClick={() => setShowPicker(!showPicker)} 
+        className="text-xs px-2 py-1 border border-primary text-primary rounded hover:bg-primary hover:text-primary-foreground transition-colors"
+      >
+        {showPicker ? 'Đóng DS' : 'Chọn từ DS'}
+      </button>
+    )}
+    
+    {/* Nút Lưu người hưởng mới - Chuyên nghiệp hơn */}
+    <button 
+      onClick={handleSaveCurrent} 
+      className="text-xs px-2 py-1 bg-accent text-accent-foreground rounded shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-1"
+    >
+      <span>💾</span> Lưu người hưởng
+    </button>
+  </div>
+</div>
           )}
 
           <InputField label="Tên người hưởng" sublabel="Beneficiary" value={formData.beneficiaryName} onChange={v => updateField('beneficiaryName', v)} />
