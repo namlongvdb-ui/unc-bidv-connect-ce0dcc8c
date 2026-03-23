@@ -39,20 +39,17 @@ export default function UNCPreview({ formData }: Props) {
           lineHeight: '1.6',
         }}
       >
-        {/* WATERMARK CẢI TIẾN: Phủ kín 100% trang, không bị trắng đầu trang */}
-<div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-  <img 
-    src={bidvWatermark} 
-    alt="" 
-    className="w-full h-full object-cover opacity-100" 
-    style={{ 
-      // Phóng lớn ảnh 1.1 lần để có phần dư lấp đầy khoảng trắng khi dịch chuyển
-      transform: 'scale(1.1)', 
-      // Dịch chuyển tâm ảnh xuống dưới để bông hoa không đè lên chữ tiêu đề
-      objectPosition: 'center 60px' 
-    }} 
-  />
-</div>
+       {/* WATERMARK CẢI TIẾN: Giữ logo an toàn, không sát mép, đầu trang kín họa tiết */}
+<div 
+  className="absolute inset-0 pointer-events-none" 
+  style={{ 
+    zIndex: 0,
+    backgroundImage: `url(${bidvWatermark})`,
+    backgroundSize: '105%', // Phóng nhẹ để lấp đầy khi dịch chuyển
+    backgroundPosition: 'center -20px', // Đẩy nhẹ lên trên để lấp kín đầu trang
+    backgroundRepeat: 'no-repeat',
+  }} 
+/>
         {/* Content Area */}
         <div className="relative h-full" style={{ zIndex: 1, padding: '10mm 15mm' }}>
           
