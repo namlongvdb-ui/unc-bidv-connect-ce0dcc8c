@@ -274,13 +274,11 @@ export default function UNCForm({
           <InputField label="Số tài khoản" value={formData.beneficiaryAccount} onChange={v => updateField('beneficiaryAccount', v)} mono />
           <InputField label="Tại Ngân hàng" value={formData.beneficiaryBank} onChange={v => updateField('beneficiaryBank', v)} />
           <InputField label="Địa chỉ" value={formData.beneficiaryAddress} onChange={v => updateField('beneficiaryAddress', v)} />
-           <div className="grid grid-cols-1 gap-4 pt-3 mt-1 border-t border-dotted border-border">
-            <InputField label="Số CCCD/Hộ chiếu" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
+          <InputField label="Số CCCD/Hộ chiếu" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
             <div className="grid grid-cols-2 gap-4">
                <InputField label="Ngày cấp" value={formData.cccdDate} onChange={v => updateField('cccdDate', v)} type="date" />
                <InputField label="Nơi cấp" value={formData.cccdPlace} onChange={v => updateField('cccdPlace', v)} />
-             </div>
-           </div>
+            </div>
          </div>
         <InputField label="Nội dung thanh toán" value={formData.remarks} onChange={v => updateField('remarks', v)} placeholder="Nội dung chuyển tiền..." />
       </div>
