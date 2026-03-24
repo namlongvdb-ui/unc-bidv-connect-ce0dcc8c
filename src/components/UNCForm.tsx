@@ -72,7 +72,16 @@ export default function UNCForm({
     updateField('beneficiaryAddress', '');
     updateField('remarks', '');
   };
-
+// NÚT MỚI: Reset toàn bộ form về trạng thái trống
+  const handleNewForm = () => {
+    const fields: (keyof UNCFormData)[] = [
+      'payerName', 'payerAddress', 'payerAccount', 'payerBank',
+      'beneficiaryName', 'beneficiaryAccount', 'beneficiaryBank', 
+      'beneficiaryCCCD', 'cccdDate', 'cccdPlace', 'beneficiaryAddress',
+      'amount', 'amountWords', 'remarks', 'feeType'
+    ];
+    fields.forEach(field => updateField(field, ''));
+  };
   const handleAmountChange = (val: string) => {
     const cleaned = val.replace(/[^\d]/g, '');
     updateField('amount', cleaned);
@@ -209,9 +218,14 @@ export default function UNCForm({
         <div className="space-y-3 p-4 bg-muted/30 rounded-xl border border-border/40">
           <div className="flex items-center justify-between mb-2">
             <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Bên trả tiền</p>
-            <button onClick={handleSetDefault} className="text-[10px] px-3 py-1 bg-amber-500 text-white rounded-full font-bold hover:bg-amber-600 transition-all shadow-sm">
-              MẶC ĐỊNH
-            </button>
+            <div className="flex gap-2">
+              <button onClick={handleNewForm} className="text-[10px] px-3 py-1 bg-red-500 text-white rounded-full font-bold hover:bg-red-600 transition-all shadow-sm">
+                NEW
+              </button>
+              <button onClick={handleSetDefault} className="text-[10px] px-3 py-1 bg-amber-500 text-white rounded-full font-bold hover:bg-amber-600 transition-all shadow-sm">
+                MẶC ĐỊNH
+              </button>
+            </div>
           </div>
           <InputField label="Tên tài khoản trích nợ" value={formData.payerName} onChange={v => updateField('payerName', v)} />
           <InputField label="Địa chỉ" value={formData.payerAddress} onChange={v => updateField('payerAddress', v)} />
