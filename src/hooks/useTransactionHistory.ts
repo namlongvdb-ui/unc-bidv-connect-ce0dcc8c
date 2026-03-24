@@ -65,6 +65,7 @@ function loadHistory(): TransactionRecord[] {
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
 
+    // Đảm bảo dữ liệu luôn được chuẩn hóa khi tải lên
     return parsed
       .filter((item): item is LegacyTransactionRecord => !!item && typeof item === 'object')
       .map(normalizeRecord);
@@ -81,24 +82,37 @@ export function useTransactionHistory() {
   }, [history]);
 
   const saveTransaction = (formData: UNCFormData) => {
-    // Không lưu trùng nếu UNC giống hệt bản ghi gần nhất
+    // 1. Kiểm tra dữ liệu đầu vào tối thiểu
+    if (!formData.beneficiaryAccount || !formData.amount) return;
+
+    // 2. Logic kiểm tra trùng lặp với bản ghi GẦN NHẤT (history[0])
     if (history.length > 0) {
       const last = history[0].formData;
-      const same = last.beneficiaryName === formData.beneficiaryName
-        && last.beneficiaryAccount === formData.beneficiaryAccount
-        && last.amount === formData.amount
-        && last.remarks === formData.remarks
-        && last.date === formData.date
-        && last.payerAccount === formData.payerAccount;
-      if (same) return;
+      
+      const isDuplicate = 
+        last.date === formData.date &&
+        last.payerAccount === formData.payerAccount &&
+        last.payerName === formData.payerName && // Thêm kiểm tra tên người trả
+        last.beneficiaryAccount === formData.beneficiaryAccount &&
+        last.beneficiaryName === formData.beneficiaryName &&
+        last.beneficiaryBank === formData.beneficiaryBank && // Thêm kiểm tra ngân hàng hưởng
+        last.amount === formData.amount &&
+        last.remarks === formData.remarks;
+
+      if (isDuplicate) {
+        console.log("UNC trùng lặp với giao dịch vừa thực hiện, không lưu.");
+        return;
+      }
     }
 
+    // 3. Tạo bản ghi mới nếu không trùng
     const record: TransactionRecord = {
       id: crypto.randomUUID(),
       date: formData.date,
       savedAt: new Date().toLocaleString('vi-VN'),
-      formData: { ...formData },
+      formData: { ...formData }, // Clone object để tránh tham chiếu
     };
+
     setHistory(prev => [record, ...prev]);
   };
 
@@ -106,7 +120,11 @@ export function useTransactionHistory() {
     setHistory(prev => prev.filter(t => t.id !== id));
   };
 
-  const clearHistory = () => setHistory([]);
+  const clearHistory = () => {
+    if (window.confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
+      setHistory([]);
+    }
+  };
 
   return { history, saveTransaction, removeTransaction, clearHistory };
 }
