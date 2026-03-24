@@ -48,13 +48,11 @@ export default function UNCForm({
   }, []);
 
   const handleSetDefault = () => {
-    // Điền thông tin Bên trả tiền
     updateField('payerName', 'NHPTVN-Chi nhánh KV Bắc Đông Bắc,PGD Cao Bằng');
     updateField('payerAddress', 'Số 32, phố Xuân Trường, phường Thục Phán, tỉnh Cao Bằng');
     updateField('payerAccount', '3300013207');
     updateField('payerBank', 'BIDV - Chi nhánh Cao Bằng');
 
-    // Điền thông tin Người hưởng
     updateField('beneficiaryName', 'Danh sách cá nhân kèm theo');
     updateField('beneficiaryAccount', '280701009');
     updateField('beneficiaryBank', 'BIDV - Chi nhánh Cao Bằng');
@@ -69,7 +67,7 @@ export default function UNCForm({
     setExporting(true);
     try {
       await exportUNCToPDF();
-      onSaveTransaction();
+      onSaveTransaction(); // Lưu vào lịch sử sau khi xuất PDF thành công
     } catch (e) {
       console.error('PDF export failed', e);
     } finally {
@@ -181,7 +179,7 @@ export default function UNCForm({
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-6 custom-scrollbar">
         <InputField label="Ngày" sublabel="Date" value={formData.date} onChange={v => updateField('date', v)} placeholder="DD/MM/YYYY" />
 
-        {/* BÊN TRẢ TIỀN - CÓ NÚT MẶC ĐỊNH PHÍA TRÊN */}
+        {/* BÊN TRẢ TIỀN */}
         <div className="space-y-3 p-4 bg-muted/30 rounded-xl border border-border/40">
           <div className="flex items-center justify-between mb-2">
             <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Bên trả tiền (Payer)</p>
@@ -274,6 +272,38 @@ export default function UNCForm({
         </div>
 
         <InputField label="Nội dung thanh toán" value={formData.remarks} onChange={v => updateField('remarks', v)} placeholder="Nội dung chuyển tiền..." />
+
+        {/* --- PHẦN LỊCH SỬ UNC --- */}
+        <div className="space-y-3 pt-4 border-t border-border">
+          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Lịch sử giao dịch (History)</p>
+          <div className="space-y-2">
+            {history.length === 0 ? (
+              <p className="text-[10px] text-center text-muted-foreground/60 py-4 italic">Chưa có giao dịch nào được thực hiện.</p>
+            ) : (
+              history.map((record) => (
+                <div 
+                  key={record.id}
+                  onClick={() => onLoadTransaction(record)}
+                  className="flex items-center justify-between p-3 bg-background border border-border rounded-lg hover:border-bidv-blue cursor-pointer transition-all group"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] font-bold truncate uppercase">{record.data.beneficiaryName}</p>
+                    <div className="flex gap-3 text-[10px] text-muted-foreground mt-0.5">
+                      <span>{record.timestamp}</span>
+                      <span className="font-mono text-bidv-blue">{formatCurrency(parseInt(record.data.amount))}đ</span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onRemoveTransaction(record.id); }}
+                    className="ml-2 text-red-400 opacity-0 group-hover:opacity-100 hover:text-red-600 transition-all"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </div>
 
       {/* FOOTER NÚT BẤM */}
