@@ -83,6 +83,17 @@ export default function UNCForm({
     fields.forEach(field => updateField(field, ''));
   };
 
+  const formatDateInput = (val: string): string => {
+    const digits = val.replace(/[^\d]/g, '').slice(0, 8);
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+  };
+
+  const handleCccdDateChange = (val: string) => {
+    updateField('cccdDate', formatDateInput(val));
+  };
+
   const handleAmountChange = (val: string) => {
     const cleaned = val.replace(/[^\d]/g, '');
     updateField('amount', cleaned);
