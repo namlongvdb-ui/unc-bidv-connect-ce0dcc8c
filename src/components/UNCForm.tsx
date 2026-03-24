@@ -49,15 +49,15 @@ export default function UNCForm({
 
   const handleSetDefault = () => {
     // Điền thông tin Bên trả tiền
-    updateField('payerName', 'NHPTVN-Chi nhánh KV Bắc Đông Bắc,PGD Cao Bằng');
-    updateField('payerAddress', 'Số 32, phố Xuân Trường, phường Thục Phán, tỉnh Cao Bằng');
-    updateField('payerAccount', '3300013207');
-    updateField('payerBank', 'BIDV - Chi nhánh Cao Bằng');
+    updateField('payerName', '');
+    updateField('payerAddress', '');
+    updateField('payerAccount', '');
+    updateField('payerBank', '');
 
     // Điền thông tin Người hưởng
-    updateField('beneficiaryName', 'Dánh sách cá nhân kèm theo');
-    updateField('beneficiaryAccount', '280701009');
-    updateField('beneficiaryBank', 'BIDV - Chi nhánh Cao Bằng');
+    updateField('beneficiaryName', '');
+    updateField('beneficiaryAccount', '');
+    updateField('beneficiaryBank', '');
   };
 
   const handleExportPDF = async () => {
