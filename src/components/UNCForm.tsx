@@ -73,7 +73,6 @@ export default function UNCForm({
     updateField('remarks', '');
   };
 
-  // FIX: Đảm bảo kiểu dữ liệu chuẩn xác để không bị lỗi build
   const handleNewForm = () => {
     const fields: (keyof UNCFormData)[] = [
       'payerName', 'payerAddress', 'payerAccount', 'payerBank',
@@ -139,7 +138,7 @@ export default function UNCForm({
           <div className="flex justify-between items-center mb-6 border-b pb-3">
             <h3 className="font-bold text-bidv-blue uppercase text-sm tracking-wider">Danh bạ người hưởng</h3>
             <button onClick={() => setShowPicker(false)} className="px-3 py-1 bg-muted hover:bg-red-50 hover:text-red-600 text-muted-foreground rounded-md text-[10px] font-bold transition-all border border-border">
-              CLOSE
+              Đóng
             </button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
@@ -165,7 +164,7 @@ export default function UNCForm({
           <div className="flex justify-between items-center mb-6 border-b pb-3">
             <h3 className="font-bold text-bidv-blue uppercase text-sm tracking-wider">Lịch sử lập UNC</h3>
             <button onClick={() => setShowHistory(false)} className="px-3 py-1 bg-muted hover:bg-red-50 hover:text-red-600 text-muted-foreground rounded-md text-[10px] font-bold transition-all border border-border">
-              ĐÓNG
+              Đóng
             </button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
@@ -215,10 +214,10 @@ export default function UNCForm({
             <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Bên trả tiền</p>
             <div className="flex gap-2">
               <button onClick={handleNewForm} className="text-[10px] px-3 py-1 bg-red-500 text-white rounded-full font-bold hover:bg-red-600 transition-all shadow-sm">
-                NEW
+                New
               </button>
               <button onClick={handleSetDefault} className="text-[10px] px-3 py-1 bg-amber-500 text-white rounded-full font-bold hover:bg-amber-600 transition-all shadow-sm">
-                MẶC ĐỊNH
+                Mặc định
               </button>
             </div>
           </div>
@@ -269,6 +268,15 @@ export default function UNCForm({
           <InputField label="Số tài khoản" value={formData.beneficiaryAccount} onChange={v => updateField('beneficiaryAccount', v)} mono />
           <InputField label="Tại Ngân hàng" value={formData.beneficiaryBank} onChange={v => updateField('beneficiaryBank', v)} />
           <InputField label="Địa chỉ" value={formData.beneficiaryAddress} onChange={v => updateField('beneficiaryAddress', v)} />
+          
+          {/* BỔ SUNG CÁC TRƯỜNG THÔNG TIN CÒN THIẾU */}
+          <div className="grid grid-cols-1 gap-3 pt-2 border-t border-border/20">
+            <InputField label="Số CCCD/Hộ chiếu" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
+            <div className="grid grid-cols-2 gap-4">
+              <InputField label="Ngày cấp" value={formData.cccdDate} onChange={v => updateField('cccdDate', v)} placeholder="DD/MM/YYYY" />
+              <InputField label="Nơi cấp" value={formData.cccdPlace} onChange={v => updateField('cccdPlace', v)} />
+            </div>
+          </div>
         </div>
 
         <InputField label="Nội dung thanh toán" value={formData.remarks} onChange={v => updateField('remarks', v)} placeholder="Nội dung chuyển tiền..." />
