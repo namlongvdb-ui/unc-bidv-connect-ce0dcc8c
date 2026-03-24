@@ -306,7 +306,7 @@ export default function UNCForm({
           <div className="grid grid-cols-1 gap-4 pt-3 mt-1 border-t border-slate-100">
             <InputField label="Số CCCD/Hộ chiếu" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
             <div className="grid grid-cols-2 gap-4">
-              <InputField label="Ngày cấp" value={formData.cccdDate} onChange={v => updateField('cccdDate', v)} placeholder="DD/MM/YYYY" />
+              <InputField label="Ngày cấp" value={formData.cccdDate} onChange={handleCccdDateChange} placeholder="DD/MM/YYYY" />
               <InputField label="Nơi cấp" value={formData.cccdPlace} onChange={v => updateField('cccdPlace', v)} />
             </div>
           </div>
