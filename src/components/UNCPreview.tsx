@@ -1,7 +1,16 @@
 import { UNCFormData } from '@/hooks/useUNCForm';
 import { formatCurrency } from '@/lib/numberToWords';
 import bidvWatermark from '@/assets/bidv-watermark.jpg';
-
+// Hàm này giúp chuyển 2026-03-24 thành 24/03/2026
+const formatToVN = (str: string) => {
+  if (!str) return "";
+  // Kiểm tra nếu chuỗi có dấu gạch ngang (dạng yyyy-mm-dd của hệ thống)
+  if (str.includes("-")) {
+    const [y, m, d] = str.split("-");
+    return `${d}/${m}/${y}`;
+  }
+  return str; // Nếu đã đúng định dạng dd/mm/yyyy rồi thì trả về luôn
+};
 interface Props {
   formData: UNCFormData;
 }
@@ -157,7 +166,7 @@ export default function UNCPreview({ formData }: Props) {
                 <div className="flex gap-1.5 items-baseline flex-1" style={{ lineHeight: '1.8' }}>
                   <span className="font-bold whitespace-nowrap text-bidv-blue" style={{ fontSize: '9.5pt' }}>Ngày cấp</span>
                   <span className="italic text-ink" style={{ fontSize: '8pt' }}>/Date:</span>
-                  <DottedValue value={formData.cccdDate} />
+                  <DottedValue value={formatToVN(formData.cccdDate)} />
                 </div>
               </div>
               <FieldRow label="Nơi cấp" sublabel="Place" value={formData.cccdPlace} />
