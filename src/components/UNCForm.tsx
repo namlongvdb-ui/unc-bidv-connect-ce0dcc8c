@@ -43,6 +43,17 @@ export default function UNCForm({
   const [showHistory, setShowHistory] = useState(false); 
   const [exporting, setExporting] = useState(false);
 
+  // Hàm tự động định dạng ngày tháng dd/mm/yyyy
+  const handleDateChange = (field: keyof UNCFormData, val: string) => {
+    let cleaned = val.replace(/\D/g, '').slice(0, 8);
+    if (cleaned.length >= 5) {
+      cleaned = `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}/${cleaned.slice(4)}`;
+    } else if (cleaned.length >= 3) {
+      cleaned = `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
+    }
+    updateField(field, cleaned);
+  };
+
   const handleExportPDF = async () => {
     if (formData.beneficiaryName && formData.amount) {
       onSaveTransaction();
@@ -98,8 +109,12 @@ export default function UNCForm({
     updateField('feeType', formData.feeType === id ? '' : id);
   };
 
-  const handleSaveBeneficiary = () => {
-    if (!formData.beneficiaryName || !formData.beneficiaryAccount) return;
+  const handleSaveBeneficiary = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!formData.beneficiaryName || !formData.beneficiaryAccount) {
+      alert("Vui lòng nhập tên và số tài khoản người hưởng!");
+      return;
+    }
     onSaveBeneficiary({
       name: formData.beneficiaryName,
       account: formData.beneficiaryAccount,
@@ -144,9 +159,7 @@ export default function UNCForm({
             </button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
-            {beneficiaries.length === 0 ? (
-              <div className="text-center py-20 text-xs text-muted-foreground italic">Chưa có người hưởng nào.</div>
-            ) : (
+            {beneficiaries && beneficiaries.length > 0 ? (
               beneficiaries.map((b) => (
                 <div key={b.id} onClick={() => selectBeneficiary(b)} className="p-4 border border-border bg-white rounded-2xl hover:border-bidv-blue hover:shadow-md cursor-pointer transition-all group relative overflow-hidden">
                   <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-bidv-blue transform -translate-x-full group-hover:translate-x-0 transition-transform" />
@@ -155,6 +168,8 @@ export default function UNCForm({
                   <button onClick={(e) => { e.stopPropagation(); onRemoveBeneficiary(b.id); }} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-red-500 text-sm transition-opacity hover:scale-125">🗑️</button>
                 </div>
               ))
+            ) : (
+              <div className="text-center py-20 text-xs text-muted-foreground italic">Chưa có người hưởng nào.</div>
             )}
           </div>
         </div>
@@ -172,13 +187,11 @@ export default function UNCForm({
             </button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
-            {(!history || history.length === 0) ? (
-              <div className="text-center py-20 text-xs text-muted-foreground italic">Chưa có lịch sử giao dịch.</div>
-            ) : (
+            {history && history.length > 0 ? (
               [...history].reverse().map((record) => {
                 const targetData = record.data || record;
-                const bName = targetData.beneficiaryName || (record as any).beneficiaryName || "N/A";
-                const amt = targetData.amount || (record as any).amount || "0";
+                const bName = targetData.beneficiaryName || "N/A";
+                const amt = targetData.amount || "0";
 
                 return (
                   <div key={record.id} onClick={() => selectHistoryRecord(record)} className="p-4 border border-border bg-white rounded-2xl hover:border-bidv-blue hover:shadow-md cursor-pointer transition-all group relative">
@@ -191,6 +204,8 @@ export default function UNCForm({
                   </div>
                 );
               })
+            ) : (
+              <div className="text-center py-20 text-xs text-muted-foreground italic">Chưa có lịch sử giao dịch.</div>
             )}
           </div>
         </div>
@@ -215,7 +230,7 @@ export default function UNCForm({
         {/* SECTION: THÔNG TIN CHUNG */}
         <div className="flex items-end gap-4 bg-white p-4 rounded-2xl border border-border/40 shadow-sm">
             <div className="flex-1">
-                <InputField label="📅 Ngày lập lệnh" value={formData.date} onChange={v => updateField('date', v)} placeholder="DD/MM/YYYY" />
+                <InputField label="📅 Ngày lập lệnh" value={formData.date} onChange={v => handleDateChange('date', v)} placeholder="DD/MM/YYYY" />
             </div>
             <div className="flex gap-2 pb-1">
               <button onClick={handleNewForm} className="text-[10px] px-3 py-2 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-all shadow-md active:scale-95 uppercase tracking-tighter flex items-center gap-1">
@@ -298,7 +313,7 @@ export default function UNCForm({
           <div className="grid grid-cols-1 gap-5 pt-4 mt-2 border-t border-slate-50 bg-slate-50/50 p-4 rounded-2xl">
             <InputField label="🆔 Số CCCD/Hộ chiếu" value={formData.beneficiaryCCCD} onChange={v => updateField('beneficiaryCCCD', v)} mono />
             <div className="grid grid-cols-2 gap-5">
-              <InputField label="🗓️ Ngày cấp" value={formData.cccdDate} onChange={v => updateField('cccdDate', v)} placeholder="DD/MM/YYYY" />
+              <InputField label="🗓️ Ngày cấp" value={formData.cccdDate} onChange={v => handleDateChange('cccdDate', v)} placeholder="DD/MM/YYYY" />
               <InputField label="📍 Nơi cấp" value={formData.cccdPlace} onChange={v => updateField('cccdPlace', v)} />
             </div>
           </div>
