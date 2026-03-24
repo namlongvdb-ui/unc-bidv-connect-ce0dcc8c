@@ -5,6 +5,10 @@ export interface Beneficiary {
   name: string;
   account: string;
   bank: string;
+  address?: string;
+  cccd?: string;
+  cccdDate?: string;
+  cccdPlace?: string;
 }
 
 const STORAGE_KEY = 'unc-beneficiaries';
